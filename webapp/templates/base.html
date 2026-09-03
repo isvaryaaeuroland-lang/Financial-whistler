@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Financial Whistler{% endblock %}</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%A3%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="{{ url_for('index') }}">📣 Financial Whistler</a>
+    <nav>
+      <a href="{{ url_for('index') }}" class="{{ 'active' if request.path == url_for('index') }}">Dashboard</a>
+      <a href="{{ url_for('companies') }}" class="{{ 'active' if request.path == url_for('companies') }}">Companies</a>
+      <a href="{{ url_for('logs') }}" class="{{ 'active' if request.path == url_for('logs') }}">Activity Log</a>
+      <form action="{{ url_for('logout') }}" method="post" class="logout-form">
+        <button type="submit" class="logout-link">Logout</button>
+      </form>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="foot">Financial Whistler &mdash; MENA financial-results monitor</footer>
+</body>
+</html>

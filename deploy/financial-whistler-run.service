@@ -1,0 +1,10 @@
+[Unit]
+Description=Financial Whistler scheduled run
+
+# A user unit (see install_services.sh) -- runs as whoever installs it, no
+# User= directive needed or wanted here.
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/financial-whistler
+ExecStart=/usr/bin/xvfb-run --auto-servernum --server-args="-screen 0 1280x900x24" \
+  /opt/financial-whistler/.venv/bin/python3 /opt/financial-whistler/run_whistler.py

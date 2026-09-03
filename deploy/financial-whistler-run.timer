@@ -1,0 +1,16 @@
+[Unit]
+Description=Run Financial Whistler 3x/day (matches the Mac's launchd schedule)
+
+[Timer]
+# Same wall-clock times as the original launchd schedule (13:00, 15:30,
+# 18:30 IST -- timed around the Saudi Exchange trading day, 10:00-15:00
+# AST/UTC+3), written here in UTC explicitly so it's correct regardless
+# of the server's configured timezone: IST is UTC+5:30, so 13:00/15:30/
+# 18:30 IST = 07:30/10:00/13:00 UTC.
+OnCalendar=*-*-* 07:30:00 UTC
+OnCalendar=*-*-* 10:00:00 UTC
+OnCalendar=*-*-* 13:00:00 UTC
+Persistent=false
+
+[Install]
+WantedBy=timers.target

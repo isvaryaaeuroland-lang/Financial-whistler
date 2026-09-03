@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Activity Log - Financial Whistler{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>Recent activity (last {{ lines|length }} lines)</h2>
+  {% if log_exists %}
+    <div class="btn-group">
+      <a class="btn btn-secondary" href="{{ url_for('logs_export') }}">⬇ Full log (.log)</a>
+      <a class="btn btn-secondary" href="{{ url_for('logs_export_xlsx') }}">⬇ Excel (.xlsx)</a>
+      <a class="btn btn-secondary" href="{{ url_for('logs_export_pdf') }}">⬇ PDF</a>
+    </div>
+    <p class="hint">
+      ".log" downloads the complete raw file. Excel and PDF cover the most
+      recent 5,000 lines, parsed into Timestamp / Level / Logger / Message.
+    </p>
+  {% endif %}
+  <pre class="log-preview log-preview-full">{% for line in lines %}{{ line }}
+{% endfor %}</pre>
+</section>
+{% endblock %}

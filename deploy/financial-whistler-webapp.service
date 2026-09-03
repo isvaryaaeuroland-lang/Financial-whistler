@@ -1,0 +1,26 @@
+[Unit]
+Description=Financial Whistler dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+# Lets this process call `systemctl --user ...` on the schedule timer (see
+# the dashboard's schedule on/off toggle) -- without this, those calls can't
+# find the user's systemd instance and fail with a bus-connection error.
+# %U doesn't work here -- for a *system* unit it resolves to the service
+# MANAGER's UID (root, i.e. 0), not the User= target -- so install_services.sh
+# substitutes the real UID into __APP_UID__ the same way it substitutes %i.
+Environment=XDG_RUNTIME_DIR=/run/user/__APP_UID__
+WorkingDirectory=/opt/financial-whistler
+# xvfb-run gives Chrome a virtual display to open into -- no monitor
+# involved, so unlike on the Mac there's no window to flash/steal focus.
+# A fresh X server per start is simpler than a long-running Xvfb service
+# and avoids that server accumulating state across days of uptime.
+ExecStart=/usr/bin/xvfb-run --auto-servernum --server-args="-screen 0 1280x900x24" \
+  /opt/financial-whistler/.venv/bin/python3 /opt/financial-whistler/webapp/app.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

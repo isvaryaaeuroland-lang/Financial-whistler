@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+state/
+logs/
+chrome-profile/
+companies.xlsx
+companies.xlsx.bak-*
+.DS_Store
+.claude/

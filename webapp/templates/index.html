@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Financial Whistler{% endblock %}
+{% block content %}
+
+<section class="card">
+  <h2>Schedule</h2>
+  {% if not schedule.installed %}
+    <p class="muted">No schedule is set up yet.</p>
+  {% else %}
+    <p>
+      Status:
+      {% if schedule.enabled %}
+        <span class="badge badge-on">ON</span> &mdash; runs automatically at
+        {{ schedule.times | join(', ') }} every day
+      {% else %}
+        <span class="badge badge-off">OFF</span> &mdash; will not run automatically
+      {% endif %}
+    </p>
+    <form method="post" action="{{ url_for('schedule_disable') if schedule.enabled else url_for('schedule_enable') }}">
+      <button class="btn {{ 'btn-danger' if schedule.enabled else 'btn-primary' }}" type="submit">
+        {{ 'Turn schedule OFF' if schedule.enabled else 'Turn schedule ON' }}
+      </button>
+    </form>
+  {% endif %}
+</section>
+
+<section class="card">
+  <h2>Run now</h2>
+  <div id="run-status-box">
+    {% if run_state.running %}
+      <p class="badge badge-running">RUNNING ({{ run_state.mode }})&hellip; started {{ run_state.started_at }}</p>
+      <p class="muted">This takes a couple of minutes. This page will update automatically.</p>
+    {% else %}
+      <div class="btn-group">
+        <form method="post" action="{{ url_for('run_now') }}">
+          <input type="hidden" name="mode" value="live">
+          <button class="btn btn-primary" type="submit">▶ Run now (checks companies, sends real alerts)</button>
+        </form>
+        <form method="post" action="{{ url_for('run_now') }}">
+          <input type="hidden" name="mode" value="dry-run">
+          <button class="btn btn-secondary" type="submit">Test run (no emails, no changes)</button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+
+  {% if last_summary %}
+    <h3>Last completed run</h3>
+    <p>{{ last_summary.timestamp }}</p>
+    <ul class="stat-list">
+      <li><strong>{{ last_summary.checked_ok }}/{{ last_summary.total }}</strong> companies checked successfully</li>
+      <li class="{{ 'stat-bad' if last_summary.failed else '' }}">{{ last_summary.failed }} failed</li>
+      <li class="{{ 'stat-alert' if last_summary.new_alerts else '' }}">{{ last_summary.new_alerts }} new financial-result announcement(s)</li>
+    </ul>
+  {% else %}
+    <p class="muted">No completed run yet.</p>
+  {% endif %}
+</section>
+
+<section class="card card-row">
+  <div>
+    <h2 style="margin-bottom: 4px;">Companies</h2>
+    <p class="muted">Currently watching <strong>{{ companies_count }}</strong> companies.</p>
+  </div>
+  <a class="btn btn-secondary" href="{{ url_for('companies') }}">Manage companies &rarr;</a>
+</section>
+
+<section class="card">
+  <h2>Recent activity</h2>
+  <pre class="log-preview">{% for line in recent_log %}{{ line }}
+{% endfor %}</pre>
+  <a href="{{ url_for('logs') }}">View full activity log &rarr;</a>
+</section>
+
+<script>
+if ({{ 'true' if run_state.running else 'false' }}) {
+  const poll = setInterval(async () => {
+    const res = await fetch("{{ url_for('run_status') }}");
+    const data = await res.json();
+    if (!data.running) {
+      clearInterval(poll);
+      window.location.reload();
+    }
+  }, 3000);
+}
+</script>
+
+{% endblock %}

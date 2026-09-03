@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block title %}Companies - Financial Whistler{% endblock %}
+{% block content %}
+
+<section class="card">
+  <h2>Add a company &mdash; search by name</h2>
+  <div class="search-controls">
+    <select id="lookup-market">
+      <option value="ksa">Saudi Arabia (Tadawul)</option>
+      <option value="qatar">Qatar (QSE)</option>
+      <option value="india">India (NSE)</option>
+      <option value="oman">Oman (MSX)</option>
+      <option value="kuwait">Kuwait (Boursa Kuwait)</option>
+      <option value="uae">UAE (DFM)</option>
+    </select>
+    <input type="text" id="lookup-query" placeholder="Type a company name, e.g. SABIC">
+    <button class="btn btn-primary" type="button" id="lookup-btn">Search</button>
+  </div>
+  <p class="muted" id="lookup-status"></p>
+  <div id="lookup-results" class="result-list"></div>
+  <p class="hint">
+    Looks up the ticker and profile page automatically. Tadawul, NSE, and
+    Boursa Kuwait searches open a real (off-screen) browser page and can
+    take up to 20 seconds, especially the first search after a while;
+    Qatar, Oman, and DFM match faster since they don't need that. Nothing
+    is added until you click a result and confirm it in the popup that
+    follows &mdash; that confirmation is what actually adds it to the Excel list.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Or add manually (any exchange)</h2>
+  <form method="post" action="{{ url_for('companies_add') }}" class="form-grid">
+    <label>Company name
+      <input type="text" name="name" placeholder="e.g. SABIC" required>
+    </label>
+    <label>Market
+      <input type="text" name="market" placeholder="e.g. Qatar, KSA, Oman" required>
+    </label>
+    <label>Ticker
+      <input type="text" name="ticker" placeholder="e.g. 2010" required>
+    </label>
+    <label>Announcement URL
+      <input type="text" name="url" placeholder="https://www.saudiexchange.sa/wps/portal/.../?companySymbol=2010" required>
+    </label>
+    <button class="btn btn-secondary" type="submit">Add company</button>
+  </form>
+  <p class="hint">
+    Use this for exchanges other than Tadawul, or if search doesn't find the
+    right match. Open the company's page on the exchange's own site and
+    copy the page URL here.
+  </p>
+</section>
+
+<script>
+const lookupBtn = document.getElementById('lookup-btn');
+const lookupInput = document.getElementById('lookup-query');
+const lookupMarket = document.getElementById('lookup-market');
+const statusEl = document.getElementById('lookup-status');
+const resultsEl = document.getElementById('lookup-results');
+
+const MARKET_LABELS = {
+  ksa: 'Tadawul', qatar: 'Qatar Exchange', india: 'NSE',
+  oman: 'MSX', kuwait: 'Boursa Kuwait', uae: 'DFM',
+};
+
+async function doLookup() {
+  const q = lookupInput.value.trim();
+  const market = lookupMarket.value;
+  if (q.length < 2) {
+    statusEl.textContent = 'Type at least 2 characters.';
+    return;
+  }
+  resultsEl.innerHTML = '';
+  statusEl.textContent = `Searching ${MARKET_LABELS[market]}… this can take a few seconds.`;
+  lookupBtn.disabled = true;
+  try {
+    const res = await fetch(`{{ url_for('companies_lookup') }}?q=${encodeURIComponent(q)}&market=${market}`);
+    const data = await res.json();
+    if (data.error) {
+      statusEl.textContent = data.error;
+      return;
+    }
+    if (!data.results.length) {
+      statusEl.textContent = `No matches for "${q}".`;
+      return;
+    }
+    statusEl.textContent = `${data.results.length} match(es) — click the right one to add it:`;
+    resultsEl.innerHTML = data.results.map(r => `
+      <div class="result-row ${r.already_added ? 'already-added' : ''}">
+        <div class="result-info">
+          <div class="result-name">${r.name}</div>
+          <div class="result-meta">${r.ticker} &middot; ${r.market_label}</div>
+        </div>
+        <form method="post" action="{{ url_for('companies_add') }}"
+              onsubmit="return confirm('Add ${r.name.replace(/'/g, "\\'")} (${r.ticker}) — ${r.market_label} to the tracked list?');">
+          <input type="hidden" name="name" value="${r.name.replace(/"/g, '&quot;')}">
+          <input type="hidden" name="ticker" value="${r.ticker}">
+          <input type="hidden" name="url" value="${r.profile_url}">
+          <input type="hidden" name="market" value="${r.market}">
+          <button class="btn ${r.already_added ? 'btn-secondary' : 'btn-primary'} btn-small" type="submit" ${r.already_added ? 'disabled' : ''}>
+            ${r.already_added ? '✓ Added' : '+ Add'}
+          </button>
+        </form>
+      </div>
+    `).join('');
+  } catch (e) {
+    statusEl.textContent = 'Something went wrong searching. Try again, or add manually below.';
+  } finally {
+    lookupBtn.disabled = false;
+  }
+}
+
+lookupBtn.addEventListener('click', doLookup);
+lookupInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); doLookup(); } });
+</script>
+
+<section class="card">
+  <h2>Upload a replacement list</h2>
+  <form method="post" action="{{ url_for('companies_upload') }}" enctype="multipart/form-data" class="form-inline">
+    <input type="file" name="file" accept=".xlsx" required>
+    <button class="btn btn-secondary" type="submit">Upload &amp; replace</button>
+  </form>
+  <p class="hint">
+    The first row must have a company-name column, a ticker/symbol column,
+    and an announcement/URL column (a Market column is optional but
+    recommended). Column order and exact wording are flexible &mdash; e.g.
+    <code>company_name</code> / <code>Market</code> /
+    <code>ticker_code / Symbol</code> / <code>announcement_url</code>.
+    This replaces the whole list &mdash; the previous file is kept as a timestamped backup.
+  </p>
+  <a class="btn btn-secondary" href="{{ url_for('companies_download') }}" style="margin-top: 12px;">⬇ Download current list</a>
+</section>
+
+<section class="card">
+  <h2>Currently watching ({{ companies|length }})</h2>
+  <div class="table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th class="col-company">Company</th>
+          <th class="col-market">Market</th>
+          <th class="col-ticker">Ticker</th>
+          <th class="col-url">URL</th>
+          <th class="col-action"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in companies %}
+        <tr>
+          <td class="col-company" title="{{ c.name }}">{{ c.name }}</td>
+          <td class="col-market">{{ c.market }}</td>
+          <td class="col-ticker">{{ c.ticker }}</td>
+          <td class="url-cell"><a href="{{ c.url }}" title="{{ c.url }}" target="_blank" rel="noopener">{{ c.url }}</a></td>
+          <td>
+            <form method="post" action="{{ url_for('companies_delete', ticker=c.ticker) }}"
+                  onsubmit="return confirm('Remove {{ c.name }} ({{ c.ticker }})?');">
+              <button class="btn btn-danger btn-small" type="submit">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% endblock %}

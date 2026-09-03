@@ -1,0 +1,394 @@
+:root {
+  --bg: #f3f5f8;
+  --card-bg: #ffffff;
+  --text: #1f2430;
+  --muted: #6b7280;
+  --muted-light: #9aa1ac;
+  --border: #e5e8ee;
+  --border-light: #eef0f4;
+  --primary: #1a5fb4;
+  --primary-dark: #144a8c;
+  --primary-light: #e8f0fb;
+  --danger: #c0392b;
+  --danger-dark: #9c2e21;
+  --danger-light: #fbe9e7;
+  --ok: #1a7f37;
+  --ok-light: #e3f6e9;
+  --warn: #b45309;
+  --warn-light: #fdecd2;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { line-height: 1.3; }
+
+/* ---------- Top bar ---------- */
+
+.topbar {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.brand {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+.topbar nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.topbar nav a {
+  margin-left: 22px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.94rem;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.topbar nav a:hover { color: var(--primary); }
+.topbar nav a.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+.logout-form { display: inline; margin-left: 22px; }
+.logout-link {
+  background: none;
+  border: none;
+  padding: 4px 0;
+  margin: 0;
+  font: inherit;
+  font-size: 0.94rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease;
+}
+.logout-link:hover { color: var(--danger); }
+
+/* ---------- Layout ---------- */
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 28px 24px 64px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px 26px;
+  margin-bottom: 22px;
+}
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+.card h3 {
+  margin-bottom: 8px;
+  margin-top: 22px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.card > *:last-child { margin-bottom: 0; }
+
+.card-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+.muted { color: var(--muted); font-size: 0.92rem; }
+.hint { color: var(--muted); font-size: 0.86rem; margin-top: 10px; }
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  font-size: 0.93rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.2;
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-secondary { background: #f0f2f6; color: var(--text); border-color: var(--border); }
+.btn-secondary:hover { background: #e6e9ef; }
+.btn-danger { background: var(--danger-light); color: var(--danger-dark); }
+.btn-danger:hover { background: #f6d4cf; }
+.btn-small { padding: 6px 12px; font-size: 0.82rem; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-group { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+/* ---------- Badges ---------- */
+
+.badge {
+  display: inline-block;
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.badge-on { background: var(--ok-light); color: var(--ok); }
+.badge-off { background: #eef0f4; color: var(--muted); }
+.badge-running { background: var(--warn-light); color: var(--warn); }
+
+/* ---------- Stat list ---------- */
+
+.stat-list { list-style: none; padding: 0; margin: 8px 0 0; }
+.stat-list li {
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.94rem;
+}
+.stat-list li:last-child { border-bottom: none; }
+.stat-bad { color: var(--danger); font-weight: 700; }
+.stat-alert { color: var(--primary); font-weight: 700; }
+
+/* ---------- Forms ---------- */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+  align-items: end;
+}
+.form-grid label:last-of-type { grid-column: 1 / -1; }
+.form-grid label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 600;
+  gap: 5px;
+}
+/* A submit button dropped straight into a form-grid (not wrapped in a
+   label) would otherwise auto-place into a single 1fr column and stretch
+   to fill it -- its own margin-right then pushes past that column's edge,
+   overlapping the card's padding/border. Span the full row instead and
+   size to content so the margin has room to sit inside the row. */
+.form-grid > button,
+.form-grid > .btn {
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-top: 6px;
+}
+.form-inline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+label { color: var(--muted); font-weight: 600; font-size: 0.85rem; }
+
+input[type="text"], input[type="password"], input[type="file"], select {
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text);
+  background: #fff;
+  margin-top: 4px;
+  transition: border-color 0.15s ease;
+}
+input[type="text"]:focus, input[type="password"]:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+input[type="file"] { padding: 6px 8px; }
+
+/* ---------- Search-by-name results ---------- */
+
+.search-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.search-controls select { min-width: 190px; }
+.search-controls input[type="text"] { flex: 1; min-width: 220px; margin-top: 0; }
+
+.result-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fafbfc;
+}
+.result-row.already-added { opacity: 0.65; }
+.result-info { min-width: 0; }
+.result-name { font-weight: 600; font-size: 0.94rem; }
+.result-meta { color: var(--muted); font-size: 0.85rem; margin-top: 1px; }
+.result-row form { flex-shrink: 0; }
+
+/* ---------- Tables ---------- */
+
+.table-scroll { overflow-x: auto; margin: 0 -2px; padding: 0 2px; }
+
+.data-table {
+  width: 100%;
+  min-width: 620px;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.data-table th, .data-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+  max-width: 0; /* lets a fixed-layout column's ellipsis/nowrap child shrink below its content's natural width */
+}
+.data-table .col-company,
+.data-table .col-market,
+.data-table .col-ticker {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.data-table th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.data-table tbody tr:hover { background: #fafbfc; }
+.data-table tbody tr:last-child td { border-bottom: none; }
+.url-cell a {
+  color: var(--primary);
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.url-cell a:hover { text-decoration: underline; }
+.col-company { width: 30%; }
+.col-market { width: 13%; }
+.col-ticker { width: 13%; }
+.col-url { width: 34%; }
+.col-action { width: 10%; }
+
+/* ---------- Log preview ---------- */
+
+.log-preview {
+  background: #0f1115;
+  color: #d7dce3;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 16px 0 0;
+}
+.log-preview-full { max-height: 70vh; }
+
+/* ---------- Flash messages ---------- */
+
+.flash {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+.flash-info { background: var(--primary-light); color: var(--primary-dark); }
+.flash-warning { background: var(--warn-light); color: var(--warn); }
+.flash-error { background: var(--danger-light); color: var(--danger-dark); }
+
+/* ---------- Login page ---------- */
+
+.login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--bg);
+}
+.login-card { width: 100%; max-width: 360px; padding: 32px 28px; }
+.login-brand {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.login-sub {
+  text-align: center;
+  margin-bottom: 22px;
+}
+.login-card form { display: flex; flex-direction: column; }
+.login-card label { margin: 12px 0 0; }
+.login-card input[type="text"],
+.login-card input[type="password"] { width: 100%; }
+.login-card button {
+  width: 100%;
+  justify-content: center;
+  margin-top: 22px;
+  padding: 11px;
+}
+
+/* ---------- Footer ---------- */
+
+.foot {
+  text-align: center;
+  color: var(--muted-light);
+  font-size: 0.82rem;
+  padding: 24px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .topbar-inner { padding: 12px 16px; }
+  .topbar nav a, .logout-form { margin-left: 14px; }
+  .container { padding: 20px 16px 48px; }
+  .card { padding: 18px 18px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid label:last-of-type { grid-column: auto; }
+  .search-controls select,
+  .search-controls input[type="text"] { width: 100%; }
+  .result-row { flex-direction: column; align-items: stretch; }
+}
