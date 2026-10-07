@@ -1,0 +1,120 @@
+# Runs the Financial Whistler scrape on GitHub's hosted runners instead of an
+# always-on server -- same job as deploy/financial-whistler-run.timer, same
+# wall-clock times.
+#
+# Three exchanges (Tadawul, Boursa Kuwait, NSE) block headless Chromium, so
+# this runs real Google Chrome (preinstalled on ubuntu runners) in a
+# non-headless window inside Xvfb, exactly like the systemd service does.
+#
+# Data that must NOT live on main (companies.xlsx is gitignored there, and
+# state/ churns every run) lives on a separate `whistler-data` branch:
+#   whistler-data/companies.xlsx     -- the client list (edit + push to update)
+#   whistler-data/state/seen.json    -- what has already been alerted on
+# Each run checks that branch out beside the code, runs, and commits the
+# updated seen.json back to it -- that commit is what makes the next run
+# remember this one. Keep the repository PRIVATE: both files are client data.
+#
+# Secrets (Settings -> Secrets and variables -> Actions): SMTP_HOST,
+# SMTP_PORT, SMTP_USE_TLS, SMTP_USER, SMTP_PASSWORD, FROM_EMAIL,
+# ALERT_RECIPIENTS -- same names and meanings as in .env.example.
+
+name: Financial Whistler
+
+on:
+  schedule:
+    # 13:00 / 15:30 / 18:30 IST = 07:30 / 10:00 / 13:00 UTC (GitHub cron is
+    # always UTC). GitHub may start scheduled runs several minutes late.
+    - cron: "30 7 * * *"
+    - cron: "0 10 * * *"
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "normal = real run; dry-run = scrape only, no email/state; test-alert = send one fake alert email"
+        type: choice
+        options: [normal, dry-run, test-alert]
+        default: dry-run
+
+# Never let two runs race on the whistler-data branch.
+concurrency:
+  group: financial-whistler
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_USE_TLS: ${{ secrets.SMTP_USE_TLS }}
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+      ALERT_RECIPIENTS: ${{ secrets.ALERT_RECIPIENTS }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out data branch
+        uses: actions/checkout@v4
+        with:
+          ref: whistler-data
+          path: data
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q xvfb
+          pip install -r requirements.txt
+          google-chrome --version
+
+      - name: Bring in companies + state from data branch
+        run: |
+          cp data/companies.xlsx companies.xlsx
+          mkdir -p state
+          if [ -f data/state/seen.json ]; then cp data/state/seen.json state/seen.json; fi
+
+      - name: Run whistler
+        run: |
+          MODE="${{ github.event.inputs.mode || 'normal' }}"
+          case "$MODE" in
+            dry-run)    ARGS="--dry-run" ;;
+            test-alert) ARGS="--force-test-alert" ;;
+            *)          ARGS="" ;;
+          esac
+          xvfb-run --auto-servernum --server-args="-screen 0 1280x900x24" \
+            python run_whistler.py $ARGS
+
+      - name: Save state back to data branch
+        if: always()
+        run: |
+          [ -f state/seen.json ] || exit 0
+          mkdir -p data/state
+          cp state/seen.json data/state/seen.json
+          cd data
+          git config user.name "financial-whistler-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/seen.json
+          if git diff --cached --quiet; then
+            echo "State unchanged."
+          else
+            git commit -m "Update seen.json (run ${{ github.run_id }})"
+            git push origin HEAD:whistler-data
+          fi
+
+      - name: Upload log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: whistler-log-${{ github.run_id }}
+          path: logs/whistler.log
+          retention-days: 14
+          if-no-files-found: ignore
