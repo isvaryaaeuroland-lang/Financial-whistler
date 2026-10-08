@@ -22,7 +22,7 @@ name: Financial Whistler
 
 on:
   schedule:
-    # 12:30 / 15:30 / 18:30 IST = 07:30 / 10:00 / 13:00 UTC (GitHub cron is
+    # 12:30 / 15:30 / 18:30 IST = 07:00 / 10:00 / 13:00 UTC (GitHub cron is
     # always UTC). GitHub may start scheduled runs several minutes late.
     - cron: "0 7 * * *"
     - cron: "0 10 * * *"
