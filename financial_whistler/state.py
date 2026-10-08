@@ -37,3 +37,11 @@ class StateStore:
         merged = set(entry["seen_ids"]) | set(current_ids)
         entry["seen_ids"] = sorted(merged)
         entry["seeded"] = True
+        entry.pop("consecutive_failures", None)  # a successful check ends any failure streak
+
+    def record_failure(self, ticker: str) -> int:
+        """Counts a failed check and returns how many runs in a row this
+        ticker has now failed. Reset by the next successful `record`."""
+        entry = self._data.setdefault(ticker, {"seeded": False, "seen_ids": []})
+        entry["consecutive_failures"] = entry.get("consecutive_failures", 0) + 1
+        return entry["consecutive_failures"]

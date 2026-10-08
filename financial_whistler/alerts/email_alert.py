@@ -44,10 +44,10 @@ class EmailAlerter(Alerter):
         log.info("Sent alert email for %d announcement(s) to %s", len(announcements), s.alert_recipients)
 
     def send_failure_report(self, failed: list[tuple[str, Company]], total: int) -> None:
-        """Emails a list of companies that could not be checked this run, so a
-        site starting to block us (or changing its layout) doesn't go
-        unnoticed -- a failed fetch is otherwise just a log line, and the run
-        as a whole still exits successfully."""
+        """Emails the companies that have just failed their second check in a
+        row, so a site starting to block us (or changing its layout) doesn't
+        go unnoticed -- a failed fetch is otherwise just a log line, and the
+        run as a whole still exits successfully."""
         if not failed:
             return
         s = self.settings
@@ -55,10 +55,12 @@ class EmailAlerter(Alerter):
             log.error("Email not fully configured - failure report for %d company(ies) NOT sent", len(failed))
             return
 
-        subject = f"[Financial Whistler] Check failed for {len(failed)} of {total} companies"
+        subject = f"[Financial Whistler] {len(failed)} of {total} companies failed 2 checks in a row"
         lines = [
-            f"{len(failed)} of {total} companies could not be checked this run, so any new "
-            "financial results from them were NOT detected. They will be retried on the next run.\n",
+            f"{len(failed)} of {total} companies could not be checked on the last 2 runs in a row, "
+            "so any new financial results from them are NOT being detected. Checks keep retrying "
+            "every run; you won't be emailed again about these companies unless they recover "
+            "and then fail twice in a row again.\n",
         ]
         by_exchange: dict[str, list[Company]] = {}
         for exchange, company in failed:

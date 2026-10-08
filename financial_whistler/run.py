@@ -64,7 +64,7 @@ def main() -> int:
     grouped = group_by_exchange_host(companies)
     state = StateStore(settings.state_file)
     new_alerts: list[Announcement] = []
-    failed: list[tuple[str, Company]] = []
+    repeat_failures: list[tuple[str, Company]] = []
     checked_ok = 0
     checked_failed = 0
 
@@ -93,8 +93,19 @@ def main() -> int:
             announcements = results.get(company.ticker)
             if announcements is None:
                 checked_failed += 1
-                failed.append((scraper.exchange_name, company))
-                log.warning("%s (%s): fetch failed, skipping this run", company.name, company.ticker)
+                streak = state.record_failure(company.ticker)
+                log.warning(
+                    "%s (%s): fetch failed (%d run(s) in a row), skipping this run",
+                    company.name,
+                    company.ticker,
+                    streak,
+                )
+                # One failure is usually a transient timeout and gets retried
+                # next run anyway; only the second in a row is worth an email.
+                # Exactly 2 (not >= 2) so a company that stays blocked is
+                # reported once, not on every run until it recovers.
+                if streak == 2:
+                    repeat_failures.append((scraper.exchange_name, company))
                 continue
 
             checked_ok += 1
@@ -148,11 +159,11 @@ def main() -> int:
         else:
             EmailAlerter(settings).send_digest(new_alerts)
 
-    if failed:
+    if repeat_failures:
         if args.dry_run:
-            log.info("[dry-run] Would send failure report for %d company(ies)", len(failed))
+            log.info("[dry-run] Would send failure report for %d company(ies)", len(repeat_failures))
         else:
-            EmailAlerter(settings).send_failure_report(failed, len(companies))
+            EmailAlerter(settings).send_failure_report(repeat_failures, len(companies))
 
     return 0
 
