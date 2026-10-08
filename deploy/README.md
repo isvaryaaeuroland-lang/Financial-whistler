@@ -1,102 +1,147 @@
-# Deploying to a server
+# Deploying Financial Whistler
 
-This replaces "runs on my Mac via launchd, only while it's on" with
-"runs on a server 24/7." The whole plan hinges on one thing that's already
-been verified: three exchanges (Tadawul, Boursa Kuwait, NSE India) block
-headless Chromium, so the server needs a real, non-headless Chrome window
-to open into -- **Xvfb** (a virtual display) provides that without needing
-an actual monitor. This was tested live against Tadawul's bot-protected
-endpoint from an ARM64 Ubuntu container running Xvfb + real Chrome and got
-a clean 200 with real data, not a 403 -- so the core assumption holds.
+The scheduled scrape now runs on **GitHub Actions** — free, no server to
+maintain, nothing that depends on a laptop being awake. The always-on server
+setup (systemd + Xvfb on a Linux VM) is still documented further down as an
+alternative, mainly for if you want the dashboard running 24/7 too.
 
-## Part 1 -- things only you can do
+## GitHub Actions (current setup)
 
-I can't create a cloud account or enter payment/identity details on your
-behalf, even for a free tier. This part is on you.
+### What runs, and when
 
-**Current path: Google Cloud's `e2-micro`** (switched to this after Oracle
-Cloud sign-up didn't go through -- also free forever, not a trial):
+[`.github/workflows/whistler.yml`](../.github/workflows/whistler.yml) runs
+`run_whistler.py` on a GitHub-hosted Ubuntu runner at **07:30, 10:00 and
+13:00 UTC** (13:00 / 15:30 / 18:30 IST) every day — the same times as the
+old launchd schedule and the systemd timer below. GitHub may start scheduled
+runs a few minutes late.
 
-1. **Sign up for Google Cloud** at [cloud.google.com/free](https://cloud.google.com/free)
-   (needs card verification too, same as any provider's free tier -- you're
-   not charged unless you explicitly upgrade off the free tier later).
-2. **Create a Compute Engine VM instance**: machine type `e2-micro`,
-   region **must** be one of `us-west1`, `us-central1`, or `us-east1` --
-   that's the "always free" eligibility rule, other regions get billed.
-   Ubuntu 24.04 LTS image. Check the "Free tier eligible" indicator the
-   console shows you before creating it, to confirm you're in the free
-   configuration. Allow HTTP/SSH firewall rules if offered (SSH at least).
-3. Note the instance's external IP address.
-4. Either use GCP's built-in "SSH in browser" once to confirm it boots, or
-   add your own SSH public key to the instance metadata so I can connect.
+Three exchanges (Tadawul, Boursa Kuwait, NSE) block headless Chromium, so
+each run starts real Google Chrome (preinstalled on the runner) in a
+non-headless window inside **Xvfb**, a virtual display. Verified with a dry
+run on 2026-10-08: **41/41 companies across all 6 exchanges checked OK** from
+GitHub's runners, no 403s. A full run takes about 6–7 minutes, so 3 runs/day
+uses roughly 600–700 of the 2,000 free Actions minutes a private repo gets
+each month.
 
-Once you have that (a running VM + SSH access), the rest is mine to drive.
+### Where the data lives
 
-One real constraint worth knowing up front: `e2-micro` only has **1GB RAM**
-(vs. the 12GB Oracle's ARM tier offers), and Chrome is the heaviest thing
-this tool runs. `setup_server.sh` now provisions a 2GB swap file as a
-safety net against that, and the scrapers already run exchanges
-sequentially (never multiple Chrome instances at once), which helps. If it
-still turns out too tight in practice, the fallback is either resizing to
-a small paid tier (a couple dollars/month) or revisiting Oracle once
-whatever blocked sign-up there is sorted out -- not a dead end either way.
+`companies.xlsx` and `state/` are gitignored on `main` (client data, and
+state that changes every run). They live on a separate **`whistler-data`**
+branch instead:
 
-## Part 2 -- what happens once you have SSH access
+| File on `whistler-data` | What it is |
+|---|---|
+| `companies.xlsx` | The client list the scheduled runs use |
+| `state/seen.json` | Announcements already alerted on, plus each company's current failure streak |
 
-Give me the server's IP and confirm SSH access works
-(`ssh ubuntu@<ip>` or whichever user the image uses), and I'll:
+Each run checks that branch out beside the code, runs, and — whenever
+`seen.json` changed — commits it back. That commit is how the next run
+remembers this one. **Keep the repository private**: both files are client data.
 
-1. Run `deploy/setup_server.sh` to install Xvfb, real Google Chrome, and Python
-2. Copy the project over (excluding your local `.venv` and `chrome-profile`,
-   which get rebuilt fresh on the server -- Chrome profiles aren't portable
-   across machines/OSes anyway, and macOS's app-store Chrome vs Linux's
-   apt Chrome are different binaries)
-3. Set up the Python venv and install dependencies
-4. Copy your `.env` over **separately and directly** (SMTP credentials,
-   dashboard login, `FLASK_SECRET_KEY`) -- deliberately never bundled into
-   the general file copy, so it doesn't end up in any staging step by
-   accident
-5. Run `deploy/install_services.sh` to wire up systemd (the Linux
-   equivalent of your two launchd `.plist` files):
-   - `financial-whistler-webapp.service` -- the dashboard, always running,
-     restarts itself if it crashes (like `KeepAlive` in the old plist)
-   - `financial-whistler-run.timer` -- the 3x/day scheduled run, same
-     wall-clock times as your current schedule (07:30 / 10:00 / 13:00 UTC,
-     which is 13:00 / 15:30 / 18:30 IST -- see the `.timer` file's comment
-     for the conversion)
-6. Verify: trigger a manual test run, confirm an alert email sends, confirm
-   the dashboard loads
+### Email settings
 
-## What's different from the Mac setup
+One repository secret, **`ALERTS`** (Settings → Secrets and variables →
+Actions), holds the full contents of the local `.env` file (see
+[`.env.example`](../.env.example)). Each run writes it out as `.env`, which
+`run.py` already loads. To change the SMTP account or the alert recipients,
+edit that secret — there's nothing to change in the code.
 
-- **No LaunchAgent GUI-session requirement.** launchd needed
-  `LimitLoadToSessionType: Aqua` because the off-screen Chrome trick still
-  needs a real window-server session on macOS. Xvfb *is* that "window
-  server" on Linux, running as part of each service's own startup (via
-  `xvfb-run`), so the server doesn't need anyone logged in at all --
-  it just needs to be powered on.
-- **No visible-window disruption to worry about.** All of today's work on
-  hiding/minimizing the Chrome window existed because a human was sitting
-  at that Mac and could see it flash. Nobody's looking at this server's
-  display, ever -- it's a headless box with a virtual framebuffer, so that
-  whole class of problem doesn't apply here. The minimize-via-CDP code
-  stays in (harmless either way), but there's nothing left for it to fix.
-- **Dashboard access.** Deployed bound to `127.0.0.1` only, same safe
-  default as your Mac. Reach it via an SSH tunnel:
-  `ssh -L 5057:127.0.0.1:5057 ubuntu@<server-ip>`, then open
-  `http://127.0.0.1:5057` in your own browser. If you'd rather have it
-  reachable directly (e.g. from your phone without SSH), say so and I'll
-  add HTTPS (via Caddy or certbot) and a firewall rule for it -- that's a
-  deliberate opt-in, not a default, since it widens what's exposed to the
-  internet.
-- **Timezone-explicit schedule.** The systemd timer specifies UTC times
-  directly rather than relying on the server's configured local timezone,
-  so the schedule is correct regardless of how the Ubuntu image has
-  `timedatectl` set.
+### Running it by hand
+
+Repo → **Actions** → **Financial Whistler** → **Run workflow**, then pick a mode:
+
+| Mode | What it does |
+|---|---|
+| `dry-run` (default) | Scrapes everything, sends no email, changes no state. Use it to check the exchanges still load. |
+| `test-alert` | Sends one fabricated "TEST COMPANY" alert, scrapes nothing. Use it to check email delivery. |
+| `normal` | A real run, exactly like the scheduled ones. |
+
+Each run's `logs/whistler.log` is attached to the run as an artifact for 14
+days (open the run → **Artifacts**).
+
+### How you find out something is wrong
+
+| Problem | How you hear about it |
+|---|---|
+| A company can't be checked (blocked, timeout, page layout changed) | A failure email, but only once the **same company fails 2 runs in a row** — a one-off timeout is retried on the next run and never emails. Sent once per failure streak, not on every run while it stays down. |
+| The whole run crashes (Chrome won't start, SMTP login rejected, …) | GitHub's own "Run failed" email to the repo owner's GitHub account |
+| Scheduled runs stop being started at all | Not covered — rare, but if no emails arrive for days, check the Actions tab. |
+
+### Changing the company list
+
+Replace `companies.xlsx` on the **`whistler-data`** branch: on GitHub,
+switch the branch selector to `whistler-data` → **Add file** → **Upload
+files**, drop in the new `companies.xlsx`, commit. The next run picks it up.
+
+Editing companies in the local dashboard only changes the copy on your own
+machine — it does **not** update the one the scheduled runs use.
+
+### Limitations
+
+- **No dashboard.** The Flask dashboard needs an always-on machine. Run it
+  locally, or use the VM setup below.
+- **Fresh Chrome profile every run.** The scrapers keep a persistent Chrome
+  profile so repeat visits look like a returning visitor; on GitHub each run
+  starts with an empty one. It hasn't caused blocks so far — if an exchange
+  starts failing, this is one of the first things to look at.
+- **GitHub's IPs are datacenter IPs.** All six exchanges accept them today;
+  that could change, which is what the failure email is for.
+
+## Alternative: always-on Linux VM (systemd + Xvfb)
+
+Use this if you want the dashboard running 24/7 alongside the scheduled
+runs. Any Ubuntu 24.04 VM works; `setup_server.sh` detects ARM64 vs x86_64
+automatically.
+
+**Free options tried so far:**
+- **Oracle Cloud Always Free, Ampere A1** (best free spec). The account's
+  home region is India South (Hyderabad), fixed for the life of the account,
+  with a free A1 limit of 2 OCPUs / 12 GB. Every create attempt on
+  2026-10-08 (2 OCPU / 12 GB and 1 OCPU / 6 GB) failed with "Out of capacity"
+  — Hyderabad has a single availability domain, so the only fix is retrying
+  later. Use the existing VCN (`vcn-20260902-1229`) — the account is at its
+  VCN limit, so the wizard's "create new VCN" option fails.
+- **Google Cloud `e2-micro`** (free in `us-west1`/`us-central1`/`us-east1`
+  only) — 1 GB RAM, tight for Chrome; `setup_server.sh` adds a 2 GB swap
+  file for that reason.
+
+Paid fallback: any ~$5/month VPS with 2 GB+ RAM.
+
+### Setup, once you have SSH access
+
+1. `sudo bash deploy/setup_server.sh` — installs Xvfb, real Google Chrome,
+   Python and a swap file, creates `/opt/financial-whistler`, enables the
+   firewall (SSH only).
+2. Copy the project to `/opt/financial-whistler`, excluding `.venv` and
+   `chrome-profile` (rebuilt fresh on the server — Chrome profiles aren't
+   portable across machines).
+3. `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`
+4. Copy `.env` over **separately** — never bundle it into the general file
+   copy.
+5. `bash deploy/install_services.sh` — wires up systemd:
+   - `financial-whistler-webapp.service` — the dashboard, always running,
+     restarted if it crashes
+   - `financial-whistler-run.timer` — the 3×/day run, times written in UTC
+     so they're correct whatever the server's timezone
+6. Verify: a manual `--dry-run`, a `--force-test-alert`, and the dashboard
+   loading.
+
+**If you move the scheduled runs to the VM, disable the GitHub Actions
+schedule** (Actions → Financial Whistler → ⋯ → Disable workflow) and copy
+`state/seen.json` from the `whistler-data` branch to the server first —
+otherwise both would alert on the same filings.
+
+**Dashboard access:** bound to `127.0.0.1` by default. Reach it through an
+SSH tunnel: `ssh -L 5057:127.0.0.1:5057 ubuntu@<server-ip>`, then open
+`http://127.0.0.1:5057`. Exposing it publicly (HTTPS via Caddy/certbot plus a
+firewall rule) is a deliberate opt-in, not a default.
 
 ## Files in this directory
 
-- `setup_server.sh` -- one-time OS package install (Xvfb, Chrome, Python)
-- `install_services.sh` -- wires up the two systemd units below
-- `financial-whistler-webapp.service` -- the dashboard
-- `financial-whistler-run.service` + `.timer` -- the 3x/day scheduled run
+- `setup_server.sh` — one-time OS package install for the VM option
+- `install_services.sh` — wires up the systemd units below
+- `financial-whistler-webapp.service` — the dashboard
+- `financial-whistler-run.service` + `.timer` — the 3×/day scheduled run on a VM
+
+The GitHub Actions workflow itself is `.github/workflows/whistler.yml` at the
+repo root.
