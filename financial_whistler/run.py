@@ -64,6 +64,7 @@ def main() -> int:
     grouped = group_by_exchange_host(companies)
     state = StateStore(settings.state_file)
     new_alerts: list[Announcement] = []
+    failed: list[tuple[str, Company]] = []
     checked_ok = 0
     checked_failed = 0
 
@@ -92,6 +93,7 @@ def main() -> int:
             announcements = results.get(company.ticker)
             if announcements is None:
                 checked_failed += 1
+                failed.append((scraper.exchange_name, company))
                 log.warning("%s (%s): fetch failed, skipping this run", company.name, company.ticker)
                 continue
 
@@ -145,6 +147,12 @@ def main() -> int:
                 log.info("  - %s (%s): %s", a.company.name, a.company.ticker, a.title)
         else:
             EmailAlerter(settings).send_digest(new_alerts)
+
+    if failed:
+        if args.dry_run:
+            log.info("[dry-run] Would send failure report for %d company(ies)", len(failed))
+        else:
+            EmailAlerter(settings).send_failure_report(failed, len(companies))
 
     return 0
 
