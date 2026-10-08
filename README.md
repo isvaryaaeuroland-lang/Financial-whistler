@@ -18,7 +18,7 @@ Exchanges currently covered:
 
 ## How it works
 
-1. At **12:30, 15:30 and 18:30 IST** every day, GitHub starts a run.
+1. At **12:37, 15:37 and 18:37 IST** every day, GitHub starts a run.
 2. The run opens each company's page on its exchange's website in real
    Google Chrome and reads the list of published financial statements.
 3. Anything not seen on an earlier run goes into one digest email to the

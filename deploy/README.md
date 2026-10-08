@@ -10,8 +10,8 @@ alternative, mainly for if you want the dashboard running 24/7 too.
 ### What runs, and when
 
 [`.github/workflows/whistler.yml`](../.github/workflows/whistler.yml) runs
-`run_whistler.py` on a GitHub-hosted Ubuntu runner at **07:00, 10:00 and
-13:00 UTC** (12:30 / 15:30 / 18:30 IST) every day — the same times as the
+`run_whistler.py` on a GitHub-hosted Ubuntu runner at **07:07, 10:07 and
+13:07 UTC** (12:37 / 15:37 / 18:37 IST) every day — the same times as the
 systemd timer below. GitHub may start scheduled
 runs a few minutes late.
 
