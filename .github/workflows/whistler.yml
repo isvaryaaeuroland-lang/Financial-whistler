@@ -14,9 +14,9 @@
 # updated seen.json back to it -- that commit is what makes the next run
 # remember this one. Keep the repository PRIVATE: both files are client data.
 #
-# Secrets (Settings -> Secrets and variables -> Actions): SMTP_HOST,
-# SMTP_PORT, SMTP_USE_TLS, SMTP_USER, SMTP_PASSWORD, FROM_EMAIL,
-# ALERT_RECIPIENTS -- same names and meanings as in .env.example.
+# Secret (Settings -> Secrets and variables -> Actions): ALERTS holds the
+# full contents of the local .env file (see .env.example). Each run writes
+# it out as .env, which run.py already loads via python-dotenv.
 
 name: Financial Whistler
 
@@ -47,14 +47,6 @@ jobs:
   run:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
-    env:
-      SMTP_HOST: ${{ secrets.SMTP_HOST }}
-      SMTP_PORT: ${{ secrets.SMTP_PORT }}
-      SMTP_USE_TLS: ${{ secrets.SMTP_USE_TLS }}
-      SMTP_USER: ${{ secrets.SMTP_USER }}
-      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-      FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
-      ALERT_RECIPIENTS: ${{ secrets.ALERT_RECIPIENTS }}
     steps:
       - uses: actions/checkout@v4
 
@@ -75,6 +67,14 @@ jobs:
           sudo apt-get install -y -q xvfb
           pip install -r requirements.txt
           google-chrome --version
+
+      - name: Write .env from secret
+        env:
+          ALERTS: ${{ secrets.ALERTS }}
+        run: |
+          if [ -z "$ALERTS" ]; then echo "ALERTS secret is empty or missing" >&2; exit 1; fi
+          printf '%s\n' "$ALERTS" > .env
+          grep -q '^SMTP_HOST=.' .env || { echo "ALERTS secret has no SMTP_HOST line" >&2; exit 1; }
 
       - name: Bring in companies + state from data branch
         run: |
