@@ -10,10 +10,18 @@ alternative, mainly for if you want the dashboard running 24/7 too.
 ### What runs, and when
 
 [`.github/workflows/whistler.yml`](../.github/workflows/whistler.yml) runs
-`run_whistler.py` on a GitHub-hosted Ubuntu runner at **07:07, 10:07 and
-13:07 UTC** (12:37 / 15:37 / 18:37 IST) every day — the same times as the
-systemd timer below. GitHub may start scheduled
-runs a few minutes late.
+`run_whistler.py` on a GitHub-hosted Ubuntu runner at **12:37, 15:37 and
+18:37 IST** every day, the same times as the systemd timer below.
+
+**The trigger is external.** A free [cron-job.org](https://cron-job.org) job
+calls GitHub's workflow_dispatch API at those times with `mode=normal`, and
+GitHub starts the run within seconds. The workflow has no `schedule:`
+trigger of its own any more. GitHub's built-in scheduler was tried first,
+and over 8–10 Oct 2026 it skipped two runs outright and started the rest
+between 30 minutes and 6 hours late. Over the same period every cron-job.org
+call started a run within 3 seconds of the scheduled minute. The request
+cron-job.org sends, and how to change the times or renew its token, are in
+the [team README](../README.md#change-the-schedule).
 
 Three exchanges (Tadawul, Boursa Kuwait, NSE) block headless Chromium, so
 each run starts real Google Chrome (preinstalled on the runner) in a
@@ -65,7 +73,7 @@ days (open the run → **Artifacts**).
 |---|---|
 | A company can't be checked (blocked, timeout, page layout changed) | A failure email, but only once the **same company fails 2 runs in a row** — a one-off timeout is retried on the next run and never emails. Sent once per failure streak, not on every run while it stays down. |
 | The whole run crashes (Chrome won't start, SMTP login rejected, …) | GitHub's own "Run failed" email to the repo owner's GitHub account |
-| Scheduled runs stop being started at all | Not covered — rare, but if no emails arrive for days, check the Actions tab. |
+| Scheduled runs stop being started at all (cron-job.org down, its GitHub token expired or revoked) | cron-job.org's own failed-execution email, if turned on in its notification settings. Otherwise not covered: if no runs show up in the Actions tab at the scheduled times, check the job's history on cron-job.org. |
 
 ### Changing the company list
 
@@ -126,8 +134,8 @@ Paid fallback: any ~$5/month VPS with 2 GB+ RAM.
 6. Verify: a manual `--dry-run`, a `--force-test-alert`, and the dashboard
    loading.
 
-**If you move the scheduled runs to the VM, disable the GitHub Actions
-schedule** (Actions → Financial Whistler → ⋯ → Disable workflow) and copy
+**If you move the scheduled runs to the VM, switch off the cron-job.org job**
+(that's what starts the GitHub runs) and copy
 `state/seen.json` from the `whistler-data` branch to the server first —
 otherwise both would alert on the same filings.
 

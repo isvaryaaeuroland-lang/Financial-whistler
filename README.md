@@ -18,7 +18,9 @@ Exchanges currently covered:
 
 ## How it works
 
-1. At **12:37, 15:37 and 18:37 IST** every day, GitHub starts a run.
+1. At **12:37, 15:37 and 18:37 IST** every day, a scheduled job on
+   [cron-job.org](https://cron-job.org) asks GitHub to start a run, and the
+   run itself happens on GitHub Actions.
 2. The run opens each company's page on its exchange's website in real
    Google Chrome and reads the list of published financial statements.
 3. Anything not seen on an earlier run goes into one digest email to the
@@ -76,7 +78,7 @@ Repo → **Actions** → **Financial Whistler** (left sidebar):
 |---|---|
 | Start a run now | **Run workflow** → choose a mode → **Run workflow** |
 | Stop a run in progress | open the run → **Cancel workflow** |
-| Pause / resume the daily schedule | **⋯** (top right) → **Disable workflow** / **Enable workflow** |
+| Pause / resume the daily schedule | On **cron-job.org** (not GitHub): switch the *Financial Whistler* job off / on in the job list. See [Change the schedule](#change-the-schedule). |
 
 The modes:
 
@@ -97,17 +99,38 @@ afterwards. The run's summary page also has the full `whistler.log` under
 
 ### Change the schedule
 
-Edit the `cron:` lines in
-[`.github/workflows/whistler.yml`](.github/workflows/whistler.yml) on `main`
-(open the file on GitHub → ✏️ → **Commit changes**).
+The run times are set on **cron-job.org**, not in this repo. GitHub's own
+scheduler was tried first and proved unreliable: it skipped runs and started
+others up to 6 hours late. So the workflow no longer has a `schedule:`
+trigger, and editing `.github/workflows/whistler.yml` won't change the times.
 
-Times are **UTC**: subtract 5h30 from IST. Format is
-`minute hour day month weekday`:
+To change the times, sign in to [cron-job.org](https://console.cron-job.org)
+with the account that owns the job, open the **Financial Whistler** job, and
+in the **Common** tab → **Execution schedule** → **Custom**, pick the
+**Hours** and **Minutes**. Ctrl+click selects several values. The job's time
+zone is **Asia/Kolkata** (**Advanced** tab), so pick IST times directly.
+Check **Next executions** shows what you expect, then **Save**.
 
-```yaml
-    - cron: "30 7 * * *"     # 07:30 UTC = 13:00 IST, every day
-    - cron: "30 3 * * 1-5"   # 03:30 UTC = 09:00 IST, Monday-Friday only
-```
+Avoid minute `0`: everything else on the internet runs on the hour too.
+
+The job works by sending this request, which you only need if you ever have
+to rebuild it:
+
+| Setting | Value |
+|---|---|
+| URL | `https://api.github.com/repos/isvaryaaeuroland-lang/Financial-whistler/actions/workflows/whistler.yml/dispatches` |
+| Method | `POST` |
+| Headers | `Authorization: Bearer <token>`, `Accept: application/vnd.github+json`, `Content-Type: application/json` |
+| Body | `{"ref":"main","inputs":{"mode":"normal"}}` |
+
+`<token>` is a fine-grained GitHub token limited to this repo with
+**Actions: Read and write** only. **It expires**, and when it does
+cron-job.org's calls fail and no runs happen. Create a new token and paste it
+into the job's `Authorization` header (keep the `Bearer ` prefix).
+
+**Don't use GitHub's "Disable workflow" to pause runs.** It also rejects
+cron-job.org's calls, which then show up there as failures. Switch the
+cron-job.org job off instead.
 
 ## Changing the code
 
@@ -187,8 +210,9 @@ running everything (dashboard included) on an always-on Linux server.
 
 ## Access and ownership
 
-The repo is **private**. Collaborators can change code, the company list and
-the schedule, and start or stop runs. Only the **owner** (currently
+The repo is **private**. Collaborators can change code and the company list,
+and start or stop runs. Only the **owner** (currently
 `isvaryaaeuroland-lang`) can change secrets — the alert recipients and SMTP
-login — or repo settings and access. Ask the owner for access or for changes
-to those.
+login — or repo settings and access. The **run schedule** is changed only by
+whoever holds the cron-job.org login, and that person also renews the GitHub
+token the job uses. Ask the owner for access or for changes to those.

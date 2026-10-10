@@ -1,6 +1,13 @@
 # Runs the Financial Whistler scrape on GitHub's hosted runners instead of an
-# always-on server -- same job as deploy/financial-whistler-run.timer, same
-# wall-clock times.
+# always-on server -- same job as deploy/financial-whistler-run.timer.
+#
+# WHEN it runs is decided outside this file: a cron-job.org job calls the
+# workflow_dispatch API at 12:37 / 15:37 / 18:37 IST (mode=normal). GitHub's
+# own `schedule:` trigger was removed because it proved unreliable here:
+# on 2026-10-08/10 it skipped runs outright and started others 30 min to
+# 6 hours late, while every cron-job.org call started a run within seconds.
+# Don't "Disable workflow" to pause runs -- that also rejects cron-job.org's
+# calls; pause the cron-job.org job instead (see README).
 #
 # Three exchanges (Tadawul, Boursa Kuwait, NSE) block headless Chromium, so
 # this runs real Google Chrome (preinstalled on ubuntu runners) in a
@@ -21,14 +28,6 @@
 name: Financial Whistler
 
 on:
-  schedule:
-    # 12:37 / 15:37 / 18:37 IST = 07:07 / 10:07 / 13:07 UTC (GitHub cron is
-    # always UTC). Deliberately off the hour: GitHub delays, and under load
-    # drops, scheduled runs, and :00 is the busiest minute -- the 07:00 and
-    # 10:00 UTC runs on 2026-10-08 never started at all.
-    - cron: "7 7 * * *"
-    - cron: "7 10 * * *"
-    - cron: "7 13 * * *"
   workflow_dispatch:
     inputs:
       mode:
