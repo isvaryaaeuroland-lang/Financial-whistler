@@ -1,3 +1,4 @@
+import json
 import logging
 import random
 import time
@@ -38,6 +39,22 @@ _FETCH_JSON_JS = """
   return r.json();
 })
 """
+
+
+def _expect_list(data, endpoint: str) -> list[dict]:
+    """Both NSE endpoints normally return a JSON list of objects. On
+    2026-10-10 (Saturday evening, ~18:30-19:05 IST) every NSE request instead
+    came back HTTP 200 with something else, which surfaced only as a
+    confusing "'str' object has no attribute 'get'" further down. Fail here
+    instead, with the start of what NSE actually sent, so the log shows
+    whether it was a maintenance notice, a rate-limit message, or a real
+    format change."""
+    if isinstance(data, list) and all(isinstance(item, dict) for item in data):
+        return data
+    snippet = json.dumps(data, ensure_ascii=False, default=str)
+    if len(snippet) > 300:
+        snippet = snippet[:300] + "..."
+    raise RuntimeError(f"unexpected {endpoint} response ({type(data).__name__}): {snippet}")
 
 
 class NseIndiaScraper(ExchangeScraper):
@@ -84,7 +101,7 @@ class NseIndiaScraper(ExchangeScraper):
                 # typing into the search box -- rather than hardcoding legal
                 # names we'd have to guess and keep in sync ourselves.
                 search_url = f"https://www.nseindia.com{SEARCH_PATH}?q={quote(company.name)}"
-                matches = page.evaluate(_FETCH_JSON_JS, search_url)
+                matches = _expect_list(page.evaluate(_FETCH_JSON_JS, search_url), "smart-search")
                 match = self._pick_match(matches, company)
                 if not match:
                     raise RuntimeError(f"no smart-search match for {company.name!r} (got {matches})")
@@ -97,7 +114,7 @@ class NseIndiaScraper(ExchangeScraper):
                     f"https://www.nseindia.com{RESULTS_PATH}?index=equities"
                     f"&symbol={resolved_symbol}&issuer={resolved_name}&period=Quarterly"
                 )
-                filings = page.evaluate(_FETCH_JSON_JS, results_url)
+                filings = _expect_list(page.evaluate(_FETCH_JSON_JS, results_url), "financial-results")
                 return self._parse_releases(company, filings)
             except Exception as exc:  # noqa: BLE001 - isolate failures per company
                 log.warning(
