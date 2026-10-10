@@ -676,7 +676,8 @@
       "1196143",
       "6598",
       "6615"
-    ]
+    ],
+    "consecutive_failures": 1
   },
   "BLUEDART": {
     "seeded": true,
@@ -787,7 +788,8 @@
       "89357",
       "94176",
       "97503"
-    ]
+    ],
+    "consecutive_failures": 1
   },
   "NUCLEUS": {
     "seeded": true,
@@ -961,7 +963,8 @@
       "93700",
       "97412",
       "97413"
-    ]
+    ],
+    "consecutive_failures": 1
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1094,7 +1097,8 @@
       "96693",
       "99191",
       "99194"
-    ]
+    ],
+    "consecutive_failures": 1
   },
   "INDGN": {
     "seeded": true,
@@ -1107,7 +1111,8 @@
       "1183213",
       "1191527",
       "1191531"
-    ]
+    ],
+    "consecutive_failures": 1
   },
   "NBOB": {
     "seeded": true,
