@@ -121,3 +121,9 @@ class Settings:
 
         recipients = os.environ.get("ALERT_RECIPIENTS", "")
         self.alert_recipients = [r.strip() for r in recipients.split(",") if r.strip()]
+
+        # Daily status email (see daily_status.py) -- off unless recipients are set.
+        status = os.environ.get("STATUS_RECIPIENTS", "")
+        self.status_recipients = [r.strip() for r in status.split(",") if r.strip()]
+        self.status_send_after = os.environ.get("STATUS_SEND_AFTER_IST", "18:00").strip() or "18:00"
+        self.expected_runs_per_day = int(os.environ.get("EXPECTED_RUNS_PER_DAY", "3").strip() or "3")

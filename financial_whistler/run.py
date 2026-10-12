@@ -7,7 +7,8 @@ from dotenv import load_dotenv
 from .config import Settings, group_by_exchange_host, load_companies
 from .models import Announcement, Company
 from .scrapers import SCRAPER_REGISTRY
-from .alerts.email_alert import EmailAlerter
+from . import daily_status
+from .alerts.email_alert import EmailAlerter, github_run_url
 from .state import StateStore
 
 
@@ -61,9 +62,11 @@ def main() -> int:
         return 1
     log.info("Loaded %d companies", len(companies))
 
+    started = daily_status.now_ist()
     grouped = group_by_exchange_host(companies)
     state = StateStore(settings.state_file)
     new_alerts: list[Announcement] = []
+    failed_now: list[str] = []
     repeat_failures: list[tuple[str, Company]] = []
     checked_ok = 0
     checked_failed = 0
@@ -93,6 +96,7 @@ def main() -> int:
             announcements = results.get(company.ticker)
             if announcements is None:
                 checked_failed += 1
+                failed_now.append(f"{company.name} ({company.ticker})")
                 streak = state.record_failure(company.ticker)
                 log.warning(
                     "%s (%s): fetch failed (%d run(s) in a row), skipping this run",
@@ -164,6 +168,22 @@ def main() -> int:
             log.info("[dry-run] Would send failure report for %d company(ies)", len(repeat_failures))
         else:
             EmailAlerter(settings).send_failure_report(repeat_failures, len(companies))
+
+    if not args.dry_run:
+        daily_status.record_run(
+            state,
+            started,
+            checked_ok,
+            len(companies),
+            failed_now,
+            [f"{a.company.name} ({a.company.ticker}): {a.title}" for a in new_alerts],
+        )
+        state.save()
+        if daily_status.is_due(state, settings, started):
+            subject, body = daily_status.build_email(state, settings, github_run_url())
+            EmailAlerter(settings).send_daily_status(subject, body)
+            daily_status.mark_sent(state)
+            state.save()
 
     return 0
 

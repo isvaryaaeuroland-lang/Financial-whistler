@@ -73,7 +73,8 @@ days (open the run → **Artifacts**).
 |---|---|
 | A company can't be checked (blocked, timeout, page layout changed) | A failure email, but only once the **same company fails 2 runs in a row** — a one-off timeout is retried on the next run and never emails. Sent once per failure streak, not on every run while it stays down. |
 | The whole run crashes (Chrome won't start, SMTP login rejected, …) | GitHub's own "Run failed" email to the repo owner's GitHub account |
-| Scheduled runs stop being started at all (cron-job.org down, its GitHub token expired or revoked) | cron-job.org's own failed-execution email, if turned on in its notification settings. Otherwise not covered: if no runs show up in the Actions tab at the scheduled times, check the job's history on cron-job.org. |
+| Scheduled runs stop being started at all (cron-job.org down, its GitHub token expired or revoked) | **The daily status email stops arriving.** Every evening the first run at or after 18:00 IST sends `STATUS_RECIPIENTS` a summary: runs completed (out of `EXPECTED_RUNS_PER_DAY`), companies checked, failures, and new results alerted. The subject says "all clear" or "check needed". No email by about 19:00 IST means the evening run didn't happen. cron-job.org's own failed-execution email, if turned on, is a second warning. |
+| Some runs missed, but the evening one ran | The daily status says "check needed" with "N of 3 expected" |
 
 ### Changing the company list
 

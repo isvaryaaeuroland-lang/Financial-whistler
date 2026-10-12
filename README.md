@@ -35,6 +35,10 @@ If the **same company can't be checked two runs in a row** (the exchange is
 blocking us, or changed its page layout), you get a separate failure email
 listing it.
 
+Once a day, the evening run also sends a short **daily status** email ("all
+clear" or "check needed") to the person looking after the tool — not to the
+whole alert list. If that email doesn't arrive, the runs have stopped.
+
 ## Everyday tasks
 
 You'll need access to the GitHub repo
@@ -64,7 +68,9 @@ not listed above, are skipped (the log says so).
 
 These are in the repository secret **`ALERTS`**, which holds the contents of
 a `.env` file (see [`.env.example`](.env.example) for every setting).
-`ALERT_RECIPIENTS` is a comma-separated list of addresses.
+`ALERT_RECIPIENTS` is a comma-separated list of addresses. The daily status
+email goes to `STATUS_RECIPIENTS` instead, a separate and normally much
+shorter list. Leave it empty to turn the status email off.
 
 Only the **repo owner** can edit secrets (Settings → Secrets and variables →
 Actions → `ALERTS` → ✏️). GitHub never shows the current value, so paste the
@@ -145,6 +151,7 @@ clone the repo and work locally (below).
 | The run itself (which companies, alert vs. failure logic) | [`financial_whistler/run.py`](financial_whistler/run.py) |
 | What "seen" means / failure streaks | [`financial_whistler/state.py`](financial_whistler/state.py) |
 | Email subject and wording | [`financial_whistler/alerts/email_alert.py`](financial_whistler/alerts/email_alert.py) |
+| Daily status email (when it's sent, "all clear" rule, wording) | [`financial_whistler/daily_status.py`](financial_whistler/daily_status.py) |
 | Reading `companies.xlsx` | [`financial_whistler/config.py`](financial_whistler/config.py) |
 | The scheduled run's setup (Chrome, Python version, timeouts, log retention) | [`.github/workflows/whistler.yml`](.github/workflows/whistler.yml) |
 | Python packages | `requirements.txt` |

@@ -11,7 +11,7 @@ from .base import Alerter
 log = logging.getLogger(__name__)
 
 
-def _github_run_url() -> str:
+def github_run_url() -> str:
     """Link to the current GitHub Actions run, or "" when running elsewhere."""
     server = os.environ.get("GITHUB_SERVER_URL")
     repo = os.environ.get("GITHUB_REPOSITORY")
@@ -70,18 +70,29 @@ class EmailAlerter(Alerter):
             for c in companies:
                 lines.append(f"  - {c.name} ({c.ticker})")
             lines.append("")
-        run_url = _github_run_url()
+        run_url = github_run_url()
         if run_url:
             lines.append(f"Run log: {run_url}")
         self._send(subject, "\n".join(lines))
         log.info("Sent failure report for %d company(ies) to %s", len(failed), s.alert_recipients)
 
-    def _send(self, subject: str, body: str) -> None:
+    def send_daily_status(self, subject: str, body: str) -> None:
+        """Goes to STATUS_RECIPIENTS only -- a short list of whoever looks
+        after the tool -- never to the full alert list."""
         s = self.settings
+        if not s.smtp_host or not s.status_recipients or not s.smtp_user or not s.smtp_password:
+            log.error("Email not fully configured - daily status NOT sent")
+            return
+        self._send(subject, body, s.status_recipients)
+        log.info("Sent daily status to %s", s.status_recipients)
+
+    def _send(self, subject: str, body: str, recipients: list[str] | None = None) -> None:
+        s = self.settings
+        recipients = recipients or s.alert_recipients
         msg = MIMEMultipart()
         msg["Subject"] = subject
         msg["From"] = s.from_email
-        msg["To"] = ", ".join(s.alert_recipients)
+        msg["To"] = ", ".join(recipients)
         msg.attach(MIMEText(body, "plain"))
 
         with smtplib.SMTP(s.smtp_host, s.smtp_port, timeout=30) as server:
@@ -89,7 +100,7 @@ class EmailAlerter(Alerter):
                 server.starttls()
             if s.smtp_user:
                 server.login(s.smtp_user, s.smtp_password)
-            server.sendmail(s.from_email, s.alert_recipients, msg.as_string())
+            server.sendmail(s.from_email, recipients, msg.as_string())
 
     @staticmethod
     def _subject(announcements: list[Announcement]) -> str:

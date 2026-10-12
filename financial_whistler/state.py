@@ -39,6 +39,12 @@ class StateStore:
         entry["seeded"] = True
         entry.pop("consecutive_failures", None)  # a successful check ends any failure streak
 
+    def daily_log(self) -> dict:
+        """Today's run summaries for the daily status email, kept in the same
+        file under a key no ticker can collide with. Shape is owned by
+        daily_status.py."""
+        return self._data.setdefault("_daily_status", {})
+
     def record_failure(self, ticker: str) -> int:
         """Counts a failed check and returns how many runs in a row this
         ticker has now failed. Reset by the next successful `record`."""
