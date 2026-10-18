@@ -1207,7 +1207,7 @@
     ]
   },
   "_daily_status": {
-    "date": "2026-10-17",
+    "date": "2026-10-18",
     "runs": [
       {
         "time": "12:37",
@@ -1215,22 +1215,8 @@
         "total": 41,
         "failed": [],
         "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
