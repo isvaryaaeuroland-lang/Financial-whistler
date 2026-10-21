@@ -116,6 +116,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: whistler-log-${{ github.run_id }}
-          path: logs/whistler.log
+          # whistler.log plus screenshots/ of any page a scraper failed on
+          path: logs/
           retention-days: 14
           if-no-files-found: ignore

@@ -101,7 +101,9 @@ Cancelling is safe: results are only saved at the very end of a run.
 Repo → **Actions** → click a run → the **run** job → expand **Run whistler**.
 This shows live progress while a run is going, and every company's result
 afterwards. The run's summary page also has the full `whistler.log` under
-**Artifacts**, kept for 14 days.
+**Artifacts**, kept for 14 days. If a Tadawul company failed, the same
+download also has a `screenshots/` folder showing what its page looked like
+at that moment, and the log line before it quotes the page's title and text.
 
 ### Change the schedule
 

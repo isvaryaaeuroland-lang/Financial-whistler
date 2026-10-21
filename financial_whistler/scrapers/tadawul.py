@@ -1,11 +1,14 @@
 import logging
 import random
+import shutil
+import tempfile
 import time
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
 from .. import chrome_profile
+from ..config import BASE_DIR
 from ..models import Announcement, Company
 from .base import ExchangeScraper
 
@@ -29,6 +32,13 @@ PROFILE_DIR = chrome_profile.profile_base() / "tadawul"
 # over roughly a minute or two, rather than as fast as the network allows.
 MIN_DELAY_S = 2.5
 MAX_DELAY_S = 6.0
+
+# Consecutive company failures that trigger one restart with a fresh session.
+RESTART_AFTER_CONSECUTIVE_FAILURES = 3
+
+# Screenshots of failed pages go next to the log, so the GitHub Actions run
+# uploads them with it (the workflow uploads the whole logs/ folder).
+SCREENSHOT_DIR = BASE_DIR / "logs" / "screenshots"
 
 PDF_BASE = "https://www.saudiexchange.sa"
 
@@ -99,36 +109,96 @@ class TadawulScraper(ExchangeScraper):
         PROFILE_DIR.mkdir(parents=True, exist_ok=True)
         chrome_profile.clear_stale_lock(PROFILE_DIR)
         with sync_playwright() as p:
-            # Akamai (in front of saudiexchange.sa) returns a 403 on every
-            # request when Chromium runs in headless mode, even with a real
-            # Chrome channel and a normal user agent -- confirmed by testing
-            # headless=True vs headless=False side by side (403 vs 200) with
-            # everything else identical. A non-headless real Chrome window,
-            # moved off-screen, passes. Requires the machine running this to
-            # have Google Chrome installed and an active logged-in session
-            # (cron/launchd need window-server access) -- see README.
-            #
-            # launch_persistent_context (rather than launch + new_context)
-            # keeps cookies/storage across runs in PROFILE_DIR, so this looks
-            # like the same returning visitor each time instead of a fresh
-            # session 3x/day.
-            context = p.chromium.launch_persistent_context(
-                user_data_dir=str(PROFILE_DIR),
-                channel="chrome",
-                headless=False,
-                args=["--window-position=-2400,-2400", "--window-size=1280,900"],
-                viewport={"width": 1280, "height": 800},
-                locale="en-US",
-            )
+            context = self._launch(p, PROFILE_DIR)
+            fresh_dir: str | None = None
             try:
-                chrome_profile.hide_window(context, context.new_page())
-                for i, company in enumerate(companies):
+                pending = list(companies)
+                streak: list[Company] = []
+                restarted = False
+                i = 0
+                while i < len(pending):
+                    company = pending[i]
                     if i > 0:
                         time.sleep(random.uniform(MIN_DELAY_S, MAX_DELAY_S))
-                    results[company.ticker] = self._scrape_one(context, company)
+                    result = self._scrape_one(context, company)
+                    results[company.ticker] = result
+                    i += 1
+                    if result is not None:
+                        streak = []
+                        continue
+                    streak.append(company)
+                    if len(streak) < RESTART_AFTER_CONSECUTIVE_FAILURES:
+                        continue
+                    # Several companies failing back to back mid-run means the
+                    # session itself has gone bad, not those companies: on
+                    # 2026-10-20 the first 11 companies worked and then all 17
+                    # remaining ones timed out in the same session, costing 30
+                    # minutes. Restart once in a brand-new browser session and
+                    # retry the streak; if that fails the same way too, the
+                    # site is down for us and the rest are skipped.
+                    if not restarted:
+                        log.warning(
+                            "%d Tadawul companies failed in a row - restarting Chrome with a fresh "
+                            "session and retrying them",
+                            len(streak),
+                        )
+                        context.close()
+                        # A throwaway profile, not a wipe of PROFILE_DIR: the
+                        # persistent "returning visitor" profile stays intact
+                        # for future runs.
+                        fresh_dir = tempfile.mkdtemp(prefix="tadawul-fresh-")
+                        try:
+                            context = self._launch(p, Path(fresh_dir))
+                        except Exception:  # noqa: BLE001 - keep the companies already checked
+                            log.exception("Could not restart Chrome - skipping the remaining Tadawul companies")
+                            for c in pending[i:]:
+                                results[c.ticker] = None
+                            break
+                        restarted = True
+                        pending[i:i] = streak
+                        streak = []
+                        continue
+                    remaining = pending[i:]
+                    log.error(
+                        "%d Tadawul companies failed in a row even after a fresh session - skipping "
+                        "the remaining %d this run",
+                        len(streak),
+                        len(remaining),
+                    )
+                    for c in remaining:
+                        results[c.ticker] = None
+                    break
             finally:
                 context.close()
+                if fresh_dir:
+                    shutil.rmtree(fresh_dir, ignore_errors=True)
         return results
+
+    @staticmethod
+    def _launch(p, profile_dir: Path):
+        # Akamai (in front of saudiexchange.sa) returns a 403 on every
+        # request when Chromium runs in headless mode, even with a real
+        # Chrome channel and a normal user agent -- confirmed by testing
+        # headless=True vs headless=False side by side (403 vs 200) with
+        # everything else identical. A non-headless real Chrome window,
+        # moved off-screen, passes. Requires the machine running this to
+        # have Google Chrome installed and an active logged-in session
+        # (cron/launchd need window-server access) -- see README.
+        #
+        # launch_persistent_context (rather than launch + new_context)
+        # keeps cookies/storage across runs in PROFILE_DIR, so this looks
+        # like the same returning visitor each time instead of a fresh
+        # session 3x/day.
+        context = p.chromium.launch_persistent_context(
+            user_data_dir=str(profile_dir),
+            channel="chrome",
+            headless=False,
+            args=["--window-position=-2400,-2400", "--window-size=1280,900"],
+            viewport={"width": 1280, "height": 800},
+            locale="en-US",
+        )
+        chrome_profile.hide_window(context, context.new_page())
+        return context
 
     def _scrape_one(self, context, company: Company) -> list[Announcement] | None:
         for attempt in range(1, self.retries + 2):
@@ -175,10 +245,41 @@ class TadawulScraper(ExchangeScraper):
                     self.retries + 1,
                     exc,
                 )
+                if attempt == self.retries + 1:
+                    self._record_failed_page(page, company)
             finally:
                 page.close()
         log.error("%s (%s): giving up after %d attempts", company.name, company.ticker, self.retries + 1)
         return None
+
+    @staticmethod
+    def _record_failed_page(page, company: Company) -> None:
+        """Logs what the page actually showed when a company finally fails,
+        and saves a screenshot next to the log. A "tab never appeared"
+        timeout alone can't tell an Akamai challenge page from maintenance
+        or a real layout change -- the 2026-10-20 failures had nothing else
+        to go on. Best-effort: never raises."""
+        try:
+            title = page.title()
+            text = page.evaluate("() => (document.body ? document.body.innerText : '').slice(0, 600)")
+            text = " ".join(text.split())[:300]
+            log.error(
+                "%s (%s): page at failure - title=%r url=%s text=%r",
+                company.name,
+                company.ticker,
+                title,
+                page.url,
+                text,
+            )
+        except Exception as exc:  # noqa: BLE001
+            log.warning("%s (%s): could not read the failed page: %s", company.name, company.ticker, exc)
+        try:
+            SCREENSHOT_DIR.mkdir(parents=True, exist_ok=True)
+            path = SCREENSHOT_DIR / f"tadawul-{company.ticker}-{time.strftime('%Y%m%d-%H%M%S')}.jpg"
+            page.screenshot(path=str(path), type="jpeg", quality=60)
+            log.error("%s (%s): screenshot of the failed page saved: %s", company.name, company.ticker, path.name)
+        except Exception as exc:  # noqa: BLE001
+            log.warning("%s (%s): could not save a screenshot: %s", company.name, company.ticker, exc)
 
     @staticmethod
     def _parse_releases(company: Company, releases: list[dict]) -> list[Announcement]:

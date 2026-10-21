@@ -64,8 +64,16 @@ Repo → **Actions** → **Financial Whistler** → **Run workflow**, then pick 
 | `test-alert` | Sends one fabricated "TEST COMPANY" alert, scrapes nothing. Use it to check email delivery. |
 | `normal` | A real run, exactly like the scheduled ones. |
 
-Each run's `logs/whistler.log` is attached to the run as an artifact for 14
-days (open the run → **Artifacts**).
+Each run's `logs/` folder is attached to the run as an artifact for 14 days
+(open the run → **Artifacts**). It holds `whistler.log` plus, when a Tadawul
+company failed, `screenshots/` of the page it failed on.
+
+If **3 Tadawul companies fail in a row** during a run, the scraper restarts
+Chrome once with a fresh session and retries them, because a session that has
+gone bad mid-run was the likely cause of the 2026-10-20 failures. If they fail
+again in the fresh session, the remaining Tadawul companies are skipped for
+that run rather than spending about 30 minutes on timeouts. They're retried on
+the next run, and the usual 2-in-a-row failure email applies.
 
 ### How you find out something is wrong
 
