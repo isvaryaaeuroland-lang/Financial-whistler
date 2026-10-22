@@ -20,8 +20,7 @@
       "413_0_2026-02-23_13-42-14_En.pdf",
       "413_0_2026-04-29_10-16-41_En.pdf",
       "413_0_2026-07-27_15-38-04_En.pdf"
-    ],
-    "consecutive_failures": 1
+    ]
   },
   "4320": {
     "seeded": true,
@@ -1208,7 +1207,7 @@
     ]
   },
   "_daily_status": {
-    "date": "2026-10-21",
+    "date": "2026-10-22",
     "runs": [
       {
         "time": "12:37",
@@ -1216,28 +1215,8 @@
         "total": 41,
         "failed": [],
         "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 38,
-        "total": 41,
-        "failed": [
-          "Alandulus (4320)",
-          "Al-Arabia (4071)",
-          "Nice One IR (4193)"
-        ],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 40,
-        "total": 41,
-        "failed": [
-          "Advanced Petrochemical Company (2330)"
-        ],
-        "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
