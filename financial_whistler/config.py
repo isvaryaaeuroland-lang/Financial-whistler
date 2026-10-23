@@ -127,3 +127,7 @@ class Settings:
         self.status_recipients = [r.strip() for r in status.split(",") if r.strip()]
         self.status_send_after = os.environ.get("STATUS_SEND_AFTER_IST", "18:00").strip() or "18:00"
         self.expected_runs_per_day = int(os.environ.get("EXPECTED_RUNS_PER_DAY", "3").strip() or "3")
+        # A company with nothing new for longer than this is flagged in the
+        # daily status -- listed companies publish every quarter, so a silent
+        # one usually means its feed has stopped updating.
+        self.stale_after_days = int(os.environ.get("STALE_AFTER_DAYS", "200").strip() or "200")

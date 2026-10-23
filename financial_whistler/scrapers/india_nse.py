@@ -2,12 +2,14 @@ import json
 import logging
 import random
 import time
+from datetime import datetime
 from pathlib import Path
 from urllib.parse import quote
 
 from playwright.sync_api import sync_playwright
 
 from .. import chrome_profile
+from ..daily_status import IST
 from ..models import Announcement, Company
 from .base import ExchangeScraper
 
@@ -33,6 +35,19 @@ WARMUP_URL = "https://www.nseindia.com/companies-listing/corporate-filings-finan
 SEARCH_PATH = "/api/smart-search/eqEtf"
 RESULTS_PATH = "/api/corporates-financial-results"
 
+# Since 2025 listed companies file quarterly results through NSE's
+# "Integrated Filing - Financials" system, and the legacy RESULTS_PATH feed
+# above simply stopped growing: found 2026-10-23, when IHCL's Q2 FY27 result
+# (filed 21-Oct-2026) never alerted -- its legacy feed still ended at the
+# Q3 FY25 filing of 17-Jan-2025, so none of the NSE companies had produced a
+# new result in ~21 months. This feed is the one that matters now; it accepts
+# a per-company `symbol` filter and returns {"data": [...], "totalCount": N},
+# newest first. The legacy feed is still read too, in case NSE uses it again.
+INTEGRATED_PATH = "/api/integrated-filing-results"
+INTEGRATED_TYPE = "Integrated Filing- Financials"
+INTEGRATED_SOURCE = "integrated"  # Announcement.source for this feed's items
+INTEGRATED_PAGE_SIZE = 100
+
 _FETCH_JSON_JS = """
 (url) => fetch(url, { headers: { accept: '*/*' } }).then(r => {
   if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + url);
@@ -51,10 +66,30 @@ def _expect_list(data, endpoint: str) -> list[dict]:
     format change."""
     if isinstance(data, list) and all(isinstance(item, dict) for item in data):
         return data
+    raise RuntimeError(f"unexpected {endpoint} response ({type(data).__name__}): {_snippet(data)}")
+
+
+def _expect_page(data, endpoint: str) -> list[dict]:
+    """The integrated-filing feed returns {"data": [...], "totalCount": N}."""
+    rows = data.get("data") if isinstance(data, dict) else None
+    if isinstance(rows, list) and all(isinstance(item, dict) for item in rows):
+        return rows
+    raise RuntimeError(f"unexpected {endpoint} response ({type(data).__name__}): {_snippet(data)}")
+
+
+def _snippet(data) -> str:
     snippet = json.dumps(data, ensure_ascii=False, default=str)
-    if len(snippet) > 300:
-        snippet = snippet[:300] + "..."
-    raise RuntimeError(f"unexpected {endpoint} response ({type(data).__name__}): {snippet}")
+    return snippet[:300] + "..." if len(snippet) > 300 else snippet
+
+
+def _parse_nse_datetime(value: str | None) -> datetime | None:
+    """NSE timestamps look like "21-Oct-2026 18:26:44" and are IST."""
+    if not value:
+        return None
+    try:
+        return datetime.strptime(value.strip(), "%d-%b-%Y %H:%M:%S").replace(tzinfo=IST)
+    except ValueError:
+        return None
 
 
 class NseIndiaScraper(ExchangeScraper):
@@ -106,16 +141,39 @@ class NseIndiaScraper(ExchangeScraper):
                 if not match:
                     raise RuntimeError(f"no smart-search match for {company.name!r} (got {matches})")
 
-                # Step 2: fetch the actual financial-results filings for that
-                # resolved company.
                 resolved_symbol = quote(match["symbol"])
                 resolved_name = quote(match["companyName"])
+
+                # Step 2: the Integrated Filing feed, where results are
+                # actually filed now. A failure here fails the company.
+                integrated_url = (
+                    f"https://www.nseindia.com{INTEGRATED_PATH}?index=equities&symbol={resolved_symbol}"
+                    f"&type={quote(INTEGRATED_TYPE)}&page=1&size={INTEGRATED_PAGE_SIZE}"
+                )
+                integrated = _expect_page(page.evaluate(_FETCH_JSON_JS, integrated_url), "integrated-filing")
+                if len(integrated) >= INTEGRATED_PAGE_SIZE:
+                    # Newest first, so the latest filings are still covered.
+                    log.warning(
+                        "%s (%s): integrated-filing returned a full page of %d - older filings not fetched",
+                        company.name,
+                        company.ticker,
+                        len(integrated),
+                    )
+
+                # Step 3: the legacy feed (frozen since Jan 2025). Optional --
+                # if it errors, the integrated results above still count.
+                legacy: list[dict] = []
                 results_url = (
                     f"https://www.nseindia.com{RESULTS_PATH}?index=equities"
                     f"&symbol={resolved_symbol}&issuer={resolved_name}&period=Quarterly"
                 )
-                filings = _expect_list(page.evaluate(_FETCH_JSON_JS, results_url), "financial-results")
-                return self._parse_releases(company, filings)
+                try:
+                    legacy = _expect_list(page.evaluate(_FETCH_JSON_JS, results_url), "financial-results")
+                except Exception as exc:  # noqa: BLE001
+                    log.warning("%s (%s): legacy financial-results feed failed, ignoring: %s",
+                                company.name, company.ticker, exc)
+
+                return self._parse_integrated(company, integrated) + self._parse_releases(company, legacy)
             except Exception as exc:  # noqa: BLE001 - isolate failures per company
                 log.warning(
                     "%s (%s): scrape attempt %d/%d failed: %s",
@@ -140,6 +198,39 @@ class NseIndiaScraper(ExchangeScraper):
         return matches[0]
 
     @staticmethod
+    def _parse_integrated(company: Company, rows: list[dict]) -> list[Announcement]:
+        out = []
+        for item in rows:
+            seq = item.get("seq_Id")
+            if not seq or (item.get("type") and item["type"] != INTEGRATED_TYPE):
+                continue
+            quarter = item.get("qe_Date") or "?"
+            try:
+                quarter = datetime.strptime(quarter, "%d-%b-%Y").strftime("%d %b %Y")
+            except ValueError:
+                pass
+            kind = ", ".join(x for x in (item.get("consolidated"), item.get("audited")) if x)
+            title = f"Results for quarter ended {quarter}" + (f" - {kind}" if kind else "")
+            if item.get("type_Sub") and item["type_Sub"] != "Original":
+                title += f" ({item['type_Sub']})"
+            pdf = item.get("pdf_attach") or ""
+            link = item.get("ixbrl") or item.get("xbrl") or ("" if pdf.endswith("/null") else pdf)
+            out.append(
+                Announcement(
+                    # "if-" keeps these clear of the legacy feed's seqNumbers,
+                    # which are a different numbering.
+                    id=f"if-{seq}",
+                    company=company,
+                    title=title,
+                    date_text=item.get("broadcast_Date") or "",
+                    detail_url=link,
+                    source=INTEGRATED_SOURCE,
+                    published=_parse_nse_datetime(item.get("broadcast_Date")),
+                )
+            )
+        return out
+
+    @staticmethod
     def _parse_releases(company: Company, filings: list[dict]) -> list[Announcement]:
         out = []
         for item in filings:
@@ -157,6 +248,7 @@ class NseIndiaScraper(ExchangeScraper):
                     title=title,
                     date_text=item.get("broadCastDate") or "",
                     detail_url=item.get("xbrl") or "",
+                    published=_parse_nse_datetime(item.get("broadCastDate")),
                 )
             )
         return out

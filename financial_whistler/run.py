@@ -1,6 +1,7 @@
 import argparse
 import logging
 import sys
+from datetime import timedelta
 
 from dotenv import load_dotenv
 
@@ -19,6 +20,32 @@ def setup_logging(log_file) -> None:
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
         handlers=[logging.FileHandler(log_file, encoding="utf-8"), logging.StreamHandler(sys.stdout)],
     )
+
+
+# How recent an item from a newly added feed must be to alert on that feed's
+# first run (see _hold_back_new_source_backlog).
+NEW_SOURCE_ALERT_WINDOW = timedelta(days=14)
+
+
+def _hold_back_new_source_backlog(state, company, new_items, now):
+    """When a scraper starts reading an extra feed for a company that's
+    already being tracked, everything in that feed looks new. Alert only its
+    recent items -- published within NEW_SOURCE_ALERT_WINDOW -- and leave the
+    rest to be recorded as baseline, the same way a newly added company's
+    history is. Added for NSE's Integrated Filing feed (2026-10-23), whose
+    ~67 filings since Jan 2025 would otherwise have gone out as one email
+    alongside IHCL's genuinely new Q2 result. Items without a publish date
+    can't be judged, so they're baselined too.
+
+    Returns (items to alert, number held back)."""
+    keep, held = [], 0
+    for item in new_items:
+        if item.source and not state.is_source_seeded(company.ticker, item.source):
+            if not (item.published and now - item.published <= NEW_SOURCE_ALERT_WINDOW):
+                held += 1
+                continue
+        keep.append(item)
+    return keep, held
 
 
 def main() -> int:
@@ -126,6 +153,14 @@ def main() -> int:
                 )
             else:
                 new_here = [a for a in announcements if a.id not in seen]
+                new_here, baselined = _hold_back_new_source_backlog(state, company, new_here, started)
+                if baselined:
+                    log.info(
+                        "%s (%s): %d older item(s) from a newly added feed recorded as baseline, not alerted",
+                        company.name,
+                        company.ticker,
+                        baselined,
+                    )
                 if not new_here:
                     log.info(
                         "%s (%s): checked OK - %d financial statement(s) on file, none new",
@@ -142,7 +177,8 @@ def main() -> int:
                     log.info("%s (%s): checked OK - NEW financial statement: %s", company.name, company.ticker, ann.title)
 
             if not args.dry_run:
-                state.record(company.ticker, current_ids)
+                state.record(company.ticker, current_ids, today=started.date())
+                state.mark_sources_seeded(company.ticker, {a.source for a in announcements if a.source})
 
     if not args.dry_run:
         state.save()
@@ -180,7 +216,12 @@ def main() -> int:
         )
         state.save()
         if daily_status.is_due(state, settings, started):
-            subject, body = daily_status.build_email(state, settings, github_run_url())
+            stale = []
+            for c in companies:
+                last = state.last_new_on(c.ticker)
+                if last and (started.date() - last).days > settings.stale_after_days:
+                    stale.append(f"{c.name} ({c.ticker}): nothing new since {last:%d %b %Y}")
+            subject, body = daily_status.build_email(state, settings, github_run_url(), stale)
             EmailAlerter(settings).send_daily_status(subject, body)
             daily_status.mark_sent(state)
             state.save()

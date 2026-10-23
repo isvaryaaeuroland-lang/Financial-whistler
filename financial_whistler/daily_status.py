@@ -63,7 +63,10 @@ def mark_sent(state: StateStore) -> None:
     state.daily_log()["sent"] = True
 
 
-def build_email(state: StateStore, settings: Settings, run_url: str = "") -> tuple[str, str]:
+def build_email(
+    state: StateStore, settings: Settings, run_url: str = "", stale: list[str] | None = None
+) -> tuple[str, str]:
+    stale = stale or []
     day = state.daily_log()
     runs = day.get("runs", [])
     date = dt.date.fromisoformat(day["date"])
@@ -73,7 +76,7 @@ def build_email(state: StateStore, settings: Settings, run_url: str = "") -> tup
     # A failure that recovered by the last run is the same one-off noise the
     # 2-in-a-row failure email ignores, so it doesn't spoil "all clear" -- it
     # is still listed in the body.
-    all_clear = len(runs) >= expected and not latest_failed
+    all_clear = len(runs) >= expected and not latest_failed and not stale
     new_today = [n for r in runs for n in r["new"]]
 
     verdict = "all clear" if all_clear else "check needed"
@@ -103,6 +106,17 @@ def build_email(state: StateStore, settings: Settings, run_url: str = "") -> tup
     if any_failed and not latest_failed:
         lines.append("  (earlier failures today recovered on a later run)")
     lines.append("")
+
+    if stale:
+        lines.append(f"Companies with nothing new in over {settings.stale_after_days} days:")
+        lines.extend(_bullets(stale))
+        lines.append(
+            "  Listed companies publish results every quarter, so this usually means the "
+            "exchange changed where it publishes them and the scraper is reading a feed "
+            "that no longer updates (as NSE did in 2025). Check the company's page on the "
+            "exchange's website."
+        )
+        lines.append("")
 
     lines.append(
         "This email is sent once a day by the first run after "

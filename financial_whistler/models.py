@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from urllib.parse import urlparse
 
 
@@ -21,3 +22,9 @@ class Announcement:
     title: str
     date_text: str
     detail_url: str
+    # Which of an exchange's feeds this came from. Empty for a scraper's
+    # original feed; a named source is new for a company the first time it
+    # appears, and then only its recent items alert (see run.py).
+    source: str = ""
+    # When the exchange published it, if the feed says (timezone-aware).
+    published: datetime | None = None

@@ -83,6 +83,7 @@ the next run, and the usual 2-in-a-row failure email applies.
 | The whole run crashes (Chrome won't start, SMTP login rejected, …) | GitHub's own "Run failed" email to the repo owner's GitHub account |
 | Scheduled runs stop being started at all (cron-job.org down, its GitHub token expired or revoked) | **The daily status email stops arriving.** Every evening the first run at or after 18:00 IST sends `STATUS_RECIPIENTS` a summary: runs completed (out of `EXPECTED_RUNS_PER_DAY`), companies checked, failures, and new results alerted. The subject says "all clear" or "check needed". No email by about 19:00 IST means the evening run didn't happen. cron-job.org's own failed-execution email, if turned on, is a second warning. |
 | Some runs missed, but the evening one ran | The daily status says "check needed" with "N of 3 expected" |
+| A company's feed silently stops updating (checks succeed, but nothing new ever appears) | The daily status lists any company with **nothing new for over `STALE_AFTER_DAYS` (200) days** and says "check needed". This is what happened with NSE: its legacy results feed stopped growing in January 2025, when Indian companies moved to "Integrated Filing", and it went unnoticed until IHCL's Q2 FY27 result didn't alert in October 2026. The count starts from the first run after 23 Oct 2026, so it can't flag feeds that were already stale before then. |
 
 ### Changing the company list
 

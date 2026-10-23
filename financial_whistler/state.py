@@ -1,4 +1,5 @@
 import json
+from datetime import date
 from pathlib import Path
 
 
@@ -32,12 +33,30 @@ class StateStore:
     def seen_ids(self, ticker: str) -> set[str]:
         return set(self._data.get(ticker, {}).get("seen_ids", []))
 
-    def record(self, ticker: str, current_ids: list[str]) -> None:
+    def record(self, ticker: str, current_ids: list[str], today: date | None = None) -> None:
         entry = self._data.setdefault(ticker, {"seeded": False, "seen_ids": []})
-        merged = set(entry["seen_ids"]) | set(current_ids)
+        before = set(entry["seen_ids"])
+        merged = before | set(current_ids)
         entry["seen_ids"] = sorted(merged)
         entry["seeded"] = True
         entry.pop("consecutive_failures", None)  # a successful check ends any failure streak
+        # When this company last showed anything new -- the daily status
+        # flags companies quiet for too long, which is how a feed that has
+        # silently stopped updating (NSE's, Jan 2025 - Oct 2026) gets noticed.
+        today = today or date.today()
+        if merged != before or "last_new_on" not in entry:
+            entry["last_new_on"] = today.isoformat()
+
+    def last_new_on(self, ticker: str) -> date | None:
+        value = self._data.get(ticker, {}).get("last_new_on")
+        return date.fromisoformat(value) if value else None
+
+    def is_source_seeded(self, ticker: str, source: str) -> bool:
+        return source in self._data.get(ticker, {}).get("seeded_sources", [])
+
+    def mark_sources_seeded(self, ticker: str, sources: set[str]) -> None:
+        entry = self._data.setdefault(ticker, {"seeded": False, "seen_ids": []})
+        entry["seeded_sources"] = sorted(set(entry.get("seeded_sources", [])) | sources)
 
     def daily_log(self) -> dict:
         """Today's run summaries for the daily status email, kept in the same
