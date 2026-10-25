@@ -756,8 +756,7 @@
     "last_new_on": "2026-10-24",
     "seeded_sources": [
       "integrated"
-    ],
-    "consecutive_failures": 1
+    ]
   },
   "BLUEDART": {
     "seeded": true,
@@ -887,8 +886,7 @@
     "last_new_on": "2026-10-24",
     "seeded_sources": [
       "integrated"
-    ],
-    "consecutive_failures": 1
+    ]
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1080,8 +1078,7 @@
     "last_new_on": "2026-10-24",
     "seeded_sources": [
       "integrated"
-    ],
-    "consecutive_failures": 1
+    ]
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1232,8 +1229,7 @@
     "last_new_on": "2026-10-24",
     "seeded_sources": [
       "integrated"
-    ],
-    "consecutive_failures": 1
+    ]
   },
   "INDGN": {
     "seeded": true,
@@ -1262,8 +1258,7 @@
     "last_new_on": "2026-10-24",
     "seeded_sources": [
       "integrated"
-    ],
-    "consecutive_failures": 1
+    ]
   },
   "NBOB": {
     "seeded": true,
@@ -1392,8 +1387,15 @@
           "Indegene (INDGN)"
         ],
         "new": []
+      },
+      {
+        "time": "18:37",
+        "ok": 41,
+        "total": 41,
+        "failed": [],
+        "new": []
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
