@@ -72,8 +72,7 @@
       "2502_0_2026-08-13_14-39-18_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "1150": {
     "seeded": true,
@@ -546,8 +545,7 @@
       "344_0_2026-07-26_17-52-20_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "4327": {
     "seeded": true,
@@ -1368,36 +1366,16 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-10-24",
+    "date": "2026-10-25",
     "runs": [
       {
         "time": "12:37",
         "ok": 41,
         "total": 41,
         "failed": [],
-        "new": [
-          "The Indian Hotels Company Limited (INDHOTEL): Results for quarter ended 30 Sep 2026 - Consolidated, Un-Audited",
-          "The Indian Hotels Company Limited (INDHOTEL): Results for quarter ended 30 Sep 2026 - Standalone, Un-Audited"
-        ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 39,
-        "total": 41,
-        "failed": [
-          "Al-Arabia (4071)",
-          "Arab national bank (1080)"
-        ],
         "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
