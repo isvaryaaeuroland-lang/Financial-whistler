@@ -631,9 +631,10 @@
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=QAMC&reportEndDate=2025-09-30&lang=1&attachmentType=1",
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=QAMC&reportEndDate=2025-12-31&lang=1&attachmentType=1",
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=QAMC&reportEndDate=2026-03-31&lang=1&attachmentType=1",
-      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=QAMC&reportEndDate=2026-06-30&lang=1&attachmentType=1"
+      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=QAMC&reportEndDate=2026-06-30&lang=1&attachmentType=1",
+      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=QAMC&reportEndDate=2026-09-30&lang=1&attachmentType=1"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-10-26",
     "seeded_sources": []
   },
   "IQCD": {
@@ -1366,36 +1367,18 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-10-25",
+    "date": "2026-10-26",
     "runs": [
       {
         "time": "12:37",
         "ok": 41,
         "total": 41,
         "failed": [],
-        "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 36,
-        "total": 41,
-        "failed": [
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
+        "new": [
+          "QAMCO (QAMC): Q3 2026 Financial Statements"
+        ]
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
