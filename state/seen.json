@@ -707,9 +707,10 @@
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=MPHC&reportEndDate=2025-09-30&lang=1&attachmentType=1",
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=MPHC&reportEndDate=2025-12-31&lang=1&attachmentType=1",
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=MPHC&reportEndDate=2026-03-31&lang=1&attachmentType=1",
-      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=MPHC&reportEndDate=2026-06-30&lang=1&attachmentType=1"
+      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=MPHC&reportEndDate=2026-06-30&lang=1&attachmentType=1",
+      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=MPHC&reportEndDate=2026-09-30&lang=1&attachmentType=1"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-10-27",
     "seeded_sources": []
   },
   "RATEGAIN": {
@@ -1367,7 +1368,7 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-10-26",
+    "date": "2026-10-27",
     "runs": [
       {
         "time": "12:37",
@@ -1375,24 +1376,10 @@
         "total": 41,
         "failed": [],
         "new": [
-          "QAMCO (QAMC): Q3 2026 Financial Statements"
+          "Mesaieed (MPHC): Q3 2026 Financial Statements"
         ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
