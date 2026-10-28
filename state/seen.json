@@ -1270,9 +1270,10 @@
       "16068",
       "16169",
       "16240",
-      "16389"
+      "16389",
+      "16514"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-10-28",
     "seeded_sources": []
   },
   "OTEL": {
@@ -1369,7 +1370,7 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-10-27",
+    "date": "2026-10-28",
     "runs": [
       {
         "time": "12:37",
@@ -1377,55 +1378,10 @@
         "total": 41,
         "failed": [],
         "new": [
-          "Mesaieed (MPHC): Q3 2026 Financial Statements"
-        ]
-      },
-      {
-        "time": "15:37",
-        "ok": 13,
-        "total": 41,
-        "failed": [
-          "Advanced Petrochemical Company (2330)",
-          "Alandulus (4320)",
-          "Al-Arabia (4071)",
-          "Alinma Bank (1150)",
-          "Alujain Corporation (2170)",
-          "DRC IR (9621)",
-          "Entaj IR (2287)",
-          "Flynas (4264)",
-          "Fourth Milling Company IR (2286)",
-          "Mepco IR (1202)",
-          "Modern Mills (2284)",
-          "National Care Medical (4005)",
-          "Nice One IR (4193)",
-          "Qomel (9600)",
-          "SACO (4008)",
-          "SHL Finance (1183)",
-          "SMC - IR (4019)",
-          "Spimaco (2070)",
-          "Takween (1201)",
-          "Tanmiah Food company (2281)",
-          "Jamjoom Pharmacy (4015)",
-          "Nahdi (4164)",
-          "Aljazira Bank (1020)",
-          "Sports club company (6018)",
-          "Arab national bank (1080)",
-          "Al-Ramz real eatate (4327)",
-          "Saudi Aramco Base Oil Co. (2223)",
-          "Elm Co. (7203)"
-        ],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": [
-          "Arab national bank (1080): Q3 2026 Financial Statements"
+          "National Bank Oman (NBOB): Unaudited financial statements for Quarter 3 ended on 2026-09-30"
         ]
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
