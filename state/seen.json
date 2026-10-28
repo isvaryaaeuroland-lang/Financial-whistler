@@ -1380,6 +1380,13 @@
         "new": [
           "National Bank Oman (NBOB): Unaudited financial statements for Quarter 3 ended on 2026-09-30"
         ]
+      },
+      {
+        "time": "15:37",
+        "ok": 41,
+        "total": 41,
+        "failed": [],
+        "new": []
       }
     ],
     "sent": false
