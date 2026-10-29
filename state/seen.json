@@ -94,9 +94,10 @@
       "361_0_2025-10-29_09-03-04_En.pdf",
       "361_0_2026-02-05_12-00-29_En.pdf",
       "361_0_2026-04-29_08-55-36_En.pdf",
-      "361_0_2026-07-29_10-23-24_En.pdf"
+      "361_0_2026-07-29_10-23-24_En.pdf",
+      "361_0_2026-10-28_15-34-39_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-10-29",
     "seeded_sources": []
   },
   "2170": {
@@ -658,9 +659,10 @@
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=IQCD&reportEndDate=2025-09-30&lang=1&attachmentType=1",
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=IQCD&reportEndDate=2025-12-31&lang=1&attachmentType=1",
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=IQCD&reportEndDate=2026-03-31&lang=1&attachmentType=1",
-      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=IQCD&reportEndDate=2026-06-30&lang=1&attachmentType=1"
+      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=IQCD&reportEndDate=2026-06-30&lang=1&attachmentType=1",
+      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=IQCD&reportEndDate=2026-09-30&lang=1&attachmentType=1"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-10-29",
     "seeded_sources": []
   },
   "GISS": {
@@ -1370,7 +1372,7 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-10-28",
+    "date": "2026-10-29",
     "runs": [
       {
         "time": "12:37",
@@ -1378,24 +1380,11 @@
         "total": 41,
         "failed": [],
         "new": [
-          "National Bank Oman (NBOB): Unaudited financial statements for Quarter 3 ended on 2026-09-30"
+          "Alinma Bank (1150): Q3 2026 Financial Statements",
+          "Industries Qatar (IQCD): Q3 2026 Financial Statements"
         ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
