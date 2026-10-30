@@ -687,9 +687,10 @@
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=GISS&reportEndDate=2025-09-30&lang=1&attachmentType=1",
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=GISS&reportEndDate=2025-12-31&lang=1&attachmentType=1",
       "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=GISS&reportEndDate=2026-03-31&lang=1&attachmentType=1",
-      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=GISS&reportEndDate=2026-06-30&lang=1&attachmentType=1"
+      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=GISS&reportEndDate=2026-06-30&lang=1&attachmentType=1",
+      "https://www.qe.com.qa/qdisclosure/api/XBRL/GetFSAttachmentAPI?symCode=GISS&reportEndDate=2026-09-30&lang=1&attachmentType=1"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-10-30",
     "seeded_sources": []
   },
   "MPHC": {
@@ -1259,10 +1260,12 @@
       "if-154411",
       "if-180889",
       "if-180892",
+      "if-206722",
+      "if-206723",
       "if-87610",
       "if-87614"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-10-30",
     "seeded_sources": [
       "integrated"
     ]
@@ -1374,7 +1377,7 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-10-29",
+    "date": "2026-10-30",
     "runs": [
       {
         "time": "12:37",
@@ -1382,28 +1385,12 @@
         "total": 41,
         "failed": [],
         "new": [
-          "Alinma Bank (1150): Q3 2026 Financial Statements",
-          "Industries Qatar (IQCD): Q3 2026 Financial Statements"
-        ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": [
-          "Jamjoom Pharmacy (4015): Q3 2026 Financial Statements",
-          "Aljazira Bank (1020): Q3 2026 Financial Statements"
+          "Gulf International Services (GISS): Q3 2026 Financial Statements",
+          "Indegene (INDGN): Results for quarter ended 30 Sep 2026 - Consolidated, Un-Audited",
+          "Indegene (INDGN): Results for quarter ended 30 Sep 2026 - Standalone, Un-Audited"
         ]
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
