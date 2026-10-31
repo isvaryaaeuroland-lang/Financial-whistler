@@ -72,7 +72,8 @@
       "2502_0_2026-08-13_14-39-18_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "1150": {
     "seeded": true,
@@ -232,7 +233,8 @@
       "5570_0_2026-08-01_11-57-00_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "4005": {
     "seeded": true,
@@ -1384,6 +1386,16 @@
         "ok": 41,
         "total": 41,
         "failed": [],
+        "new": []
+      },
+      {
+        "time": "15:37",
+        "ok": 39,
+        "total": 41,
+        "failed": [
+          "Al-Arabia (4071)",
+          "Modern Mills (2284)"
+        ],
         "new": []
       }
     ],
