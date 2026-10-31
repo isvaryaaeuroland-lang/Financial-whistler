@@ -1377,34 +1377,16 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-10-30",
+    "date": "2026-10-31",
     "runs": [
       {
         "time": "12:37",
         "ok": 41,
         "total": 41,
         "failed": [],
-        "new": [
-          "Gulf International Services (GISS): Q3 2026 Financial Statements",
-          "Indegene (INDGN): Results for quarter ended 30 Sep 2026 - Consolidated, Un-Audited",
-          "Indegene (INDGN): Results for quarter ended 30 Sep 2026 - Standalone, Un-Audited"
-        ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
         "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
