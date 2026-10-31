@@ -72,8 +72,7 @@
       "2502_0_2026-08-13_14-39-18_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "1150": {
     "seeded": true,
@@ -233,8 +232,7 @@
       "5570_0_2026-08-01_11-57-00_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "4005": {
     "seeded": true,
@@ -1080,12 +1078,14 @@
       "if-159743",
       "if-180716",
       "if-180719",
+      "if-207873",
+      "if-207874",
       "if-91493",
       "if-91502",
       "if-96441",
       "if-96443"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-10-31",
     "seeded_sources": [
       "integrated"
     ]
@@ -1397,8 +1397,18 @@
           "Modern Mills (2284)"
         ],
         "new": []
+      },
+      {
+        "time": "18:37",
+        "ok": 41,
+        "total": 41,
+        "failed": [],
+        "new": [
+          "Nucleus Software (NUCLEUS): Results for quarter ended 30 Sep 2026 - Consolidated, Un-Audited",
+          "Nucleus Software (NUCLEUS): Results for quarter ended 30 Sep 2026 - Standalone, Audited"
+        ]
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
