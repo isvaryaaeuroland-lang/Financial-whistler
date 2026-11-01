@@ -476,9 +476,10 @@
       "2964_0_2025-10-30_16-21-55_En.pdf",
       "2964_0_2026-03-16_14-43-27_En.pdf",
       "2964_0_2026-05-07_16-32-56_En.pdf",
-      "2964_0_2026-07-30_17-39-38_En.pdf"
+      "2964_0_2026-07-30_17-39-38_En.pdf",
+      "2964_0_2026-10-29_16-13-12_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-01",
     "seeded_sources": []
   },
   "1020": {
@@ -1379,36 +1380,18 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-10-31",
+    "date": "2026-11-01",
     "runs": [
       {
         "time": "12:37",
         "ok": 41,
         "total": 41,
         "failed": [],
-        "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 39,
-        "total": 41,
-        "failed": [
-          "Al-Arabia (4071)",
-          "Modern Mills (2284)"
-        ],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
         "new": [
-          "Nucleus Software (NUCLEUS): Results for quarter ended 30 Sep 2026 - Consolidated, Un-Audited",
-          "Nucleus Software (NUCLEUS): Results for quarter ended 30 Sep 2026 - Standalone, Audited"
+          "Nahdi (4164): Q3 2026 Financial Statements"
         ]
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
