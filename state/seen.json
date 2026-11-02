@@ -166,7 +166,8 @@
       "7606_0_2026-08-11_13-31-29_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "2286": {
     "seeded": true,
@@ -229,9 +230,10 @@
       "5570_0_2025-10-30_15-35-06_En.pdf",
       "5570_0_2026-03-08_16-43-52_En.pdf",
       "5570_0_2026-05-06_13-57-09_En.pdf",
-      "5570_0_2026-08-01_11-57-00_En.pdf"
+      "5570_0_2026-08-01_11-57-00_En.pdf",
+      "5570_0_2026-11-01_16-38-49_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-02",
     "seeded_sources": []
   },
   "4005": {
@@ -1380,32 +1382,20 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-01",
+    "date": "2026-11-02",
     "runs": [
       {
         "time": "12:37",
-        "ok": 41,
+        "ok": 40,
         "total": 41,
-        "failed": [],
+        "failed": [
+          "Flynas (4264)"
+        ],
         "new": [
-          "Nahdi (4164): Q3 2026 Financial Statements"
+          "Modern Mills (2284): Q3 2026 Financial Statements"
         ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
