@@ -166,8 +166,7 @@
       "7606_0_2026-08-11_13-31-29_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "2286": {
     "seeded": true,
@@ -1394,6 +1393,13 @@
         "new": [
           "Modern Mills (2284): Q3 2026 Financial Statements"
         ]
+      },
+      {
+        "time": "15:37",
+        "ok": 41,
+        "total": 41,
+        "failed": [],
+        "new": []
       }
     ],
     "sent": false
