@@ -614,9 +614,10 @@
       "2784_0_2025-11-06_08-39-33_En.pdf",
       "2784_0_2026-03-05_17-23-45_En.pdf",
       "2784_0_2026-05-13_18-52-26_En.pdf",
-      "2784_0_2026-08-06_12-46-11_En.pdf"
+      "2784_0_2026-08-06_12-46-11_En.pdf",
+      "2784_0_2026-11-02_22-06-58_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-03",
     "seeded_sources": []
   },
   "QAMC": {
@@ -1382,36 +1383,18 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-02",
+    "date": "2026-11-03",
     "runs": [
       {
         "time": "12:37",
-        "ok": 40,
-        "total": 41,
-        "failed": [
-          "Flynas (4264)"
-        ],
-        "new": [
-          "Modern Mills (2284): Q3 2026 Financial Statements"
-        ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
         "ok": 41,
         "total": 41,
         "failed": [],
         "new": [
-          "Nice One IR (4193): Q3 2026 Financial Statements"
+          "Elm Co. (7203): Q3 2026 Financial Statements"
         ]
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
