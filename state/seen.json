@@ -1383,32 +1383,16 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-03",
+    "date": "2026-11-04",
     "runs": [
       {
         "time": "12:37",
         "ok": 41,
         "total": 41,
         "failed": [],
-        "new": [
-          "Elm Co. (7203): Q3 2026 Financial Statements"
-        ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
         "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
