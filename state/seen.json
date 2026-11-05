@@ -261,7 +261,8 @@
       "436_0_2026-11-03_16-01-39_En.pdf"
     ],
     "last_new_on": "2026-11-04",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "4193": {
     "seeded": true,
@@ -767,10 +768,12 @@
       "if-159988",
       "if-183035",
       "if-183037",
+      "if-210434",
+      "if-210435",
       "if-93915",
       "if-93918"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-05",
     "seeded_sources": [
       "integrated"
     ]
@@ -1407,8 +1410,20 @@
         "total": 41,
         "failed": [],
         "new": []
+      },
+      {
+        "time": "18:37",
+        "ok": 40,
+        "total": 41,
+        "failed": [
+          "National Care Medical (4005)"
+        ],
+        "new": [
+          "Rategain (RATEGAIN): Results for quarter ended 30 Sep 2026 - Consolidated, Un-Audited",
+          "Rategain (RATEGAIN): Results for quarter ended 30 Sep 2026 - Standalone, Un-Audited"
+        ]
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
