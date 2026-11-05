@@ -183,9 +183,10 @@
       "6426_0_2025-11-06_13-39-21_En.pdf",
       "6426_0_2026-03-15_17-34-00_En.pdf",
       "6426_0_2026-05-07_01-56-46_En.pdf",
-      "6426_0_2026-08-04_14-41-37_En.pdf"
+      "6426_0_2026-08-04_14-41-37_En.pdf",
+      "6426_0_2026-11-04_18-36-33_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-05",
     "seeded_sources": []
   },
   "1202": {
@@ -340,9 +341,10 @@
       "3043_0_2025-11-03_15-43-54_En.pdf",
       "3043_0_2026-03-11_16-45-02_En.pdf",
       "3043_0_2026-05-06_17-22-05_En.pdf",
-      "3043_0_2026-08-05_17-00-21_En.pdf"
+      "3043_0_2026-08-05_17-00-21_En.pdf",
+      "3043_0_2026-11-04_16-11-29_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-05",
     "seeded_sources": []
   },
   "4019": {
@@ -381,9 +383,10 @@
       "387_0_2025-11-09_15-56-55_En.pdf",
       "387_0_2026-04-07_15-59-21_En.pdf",
       "387_0_2026-05-07_13-48-47_En.pdf",
-      "387_0_2026-08-04_16-41-36_En.pdf"
+      "387_0_2026-08-04_16-41-36_En.pdf",
+      "387_0_2026-11-05_09-56-07_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-05",
     "seeded_sources": []
   },
   "1201": {
@@ -1385,33 +1388,20 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-04",
+    "date": "2026-11-05",
     "runs": [
       {
         "time": "12:37",
         "ok": 41,
         "total": 41,
         "failed": [],
-        "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
         "new": [
-          "Alandulus (4320): Q3 2026 Financial Statements",
-          "National Care Medical (4005): Q3 2026 Financial Statements"
+          "Fourth Milling Company IR (2286): Q3 2026 Financial Statements",
+          "SHL Finance (1183): Q3 2026 Financial Statements",
+          "Spimaco (2070): Q3 2026 Financial Statements"
         ]
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
