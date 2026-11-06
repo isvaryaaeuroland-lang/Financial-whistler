@@ -899,10 +899,12 @@
       "if-165564",
       "if-181310",
       "if-181311",
+      "if-211227",
+      "if-211233",
       "if-94030",
       "if-94043"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-06",
     "seeded_sources": [
       "integrated"
     ]
@@ -1405,8 +1407,18 @@
         "total": 41,
         "failed": [],
         "new": []
+      },
+      {
+        "time": "18:37",
+        "ok": 41,
+        "total": 41,
+        "failed": [],
+        "new": [
+          "BlueDart (BLUEDART): Results for quarter ended 30 Sep 2026 - Consolidated, Un-Audited",
+          "BlueDart (BLUEDART): Results for quarter ended 30 Sep 2026 - Standalone, Un-Audited"
+        ]
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
