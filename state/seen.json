@@ -261,8 +261,7 @@
       "436_0_2026-11-03_16-01-39_En.pdf"
     ],
     "last_new_on": "2026-11-04",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "4193": {
     "seeded": true,
@@ -1391,39 +1390,16 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-05",
+    "date": "2026-11-06",
     "runs": [
       {
         "time": "12:37",
         "ok": 41,
         "total": 41,
         "failed": [],
-        "new": [
-          "Fourth Milling Company IR (2286): Q3 2026 Financial Statements",
-          "SHL Finance (1183): Q3 2026 Financial Statements",
-          "Spimaco (2070): Q3 2026 Financial Statements"
-        ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
         "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 40,
-        "total": 41,
-        "failed": [
-          "National Care Medical (4005)"
-        ],
-        "new": [
-          "Rategain (RATEGAIN): Results for quarter ended 30 Sep 2026 - Consolidated, Un-Audited",
-          "Rategain (RATEGAIN): Results for quarter ended 30 Sep 2026 - Standalone, Un-Audited"
-        ]
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
