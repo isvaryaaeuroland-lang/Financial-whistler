@@ -623,7 +623,8 @@
       "2784_0_2026-11-02_22-06-58_En.pdf"
     ],
     "last_new_on": "2026-11-03",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "QAMC": {
     "seeded": true,
@@ -1399,6 +1400,15 @@
         "ok": 41,
         "total": 41,
         "failed": [],
+        "new": []
+      },
+      {
+        "time": "15:37",
+        "ok": 40,
+        "total": 41,
+        "failed": [
+          "Elm Co. (7203)"
+        ],
         "new": []
       }
     ],
