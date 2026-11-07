@@ -1392,7 +1392,7 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-06",
+    "date": "2026-11-07",
     "runs": [
       {
         "time": "12:37",
@@ -1400,25 +1400,8 @@
         "total": 41,
         "failed": [],
         "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": [
-          "BlueDart (BLUEDART): Results for quarter ended 30 Sep 2026 - Consolidated, Un-Audited",
-          "BlueDart (BLUEDART): Results for quarter ended 30 Sep 2026 - Standalone, Un-Audited"
-        ]
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
