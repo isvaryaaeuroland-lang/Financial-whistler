@@ -73,7 +73,8 @@
       "2502_0_2026-08-13_14-39-18_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "1150": {
     "seeded": true,
@@ -576,7 +577,8 @@
       "8347_0_2026-11-08_18-25-39_En.pdf"
     ],
     "last_new_on": "2026-11-09",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "2223": {
     "seeded": true,
@@ -601,7 +603,8 @@
       "3903_0_2026-08-04_09-29-24_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "7203": {
     "seeded": true,
@@ -627,7 +630,8 @@
       "2784_0_2026-11-02_22-06-58_En.pdf"
     ],
     "last_new_on": "2026-11-03",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "QAMC": {
     "seeded": true,
@@ -1414,8 +1418,20 @@
         "total": 41,
         "failed": [],
         "new": []
+      },
+      {
+        "time": "18:37",
+        "ok": 37,
+        "total": 41,
+        "failed": [
+          "Al-Arabia (4071)",
+          "Al-Ramz real eatate (4327)",
+          "Saudi Aramco Base Oil Co. (2223)",
+          "Elm Co. (7203)"
+        ],
+        "new": []
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
