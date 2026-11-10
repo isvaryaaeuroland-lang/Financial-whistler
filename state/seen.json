@@ -1327,6 +1327,7 @@
       "16939",
       "17673",
       "1840",
+      "1845",
       "18617",
       "19675",
       "20776",
@@ -1407,6 +1408,15 @@
         "failed": [],
         "new": [
           "Advanced Petrochemical Company (2330): Q3 2026 Financial Statements",
+          "Jazeera Airways (JAZEERA): Third Quarter 2026 Financial Statement"
+        ]
+      },
+      {
+        "time": "15:37",
+        "ok": 41,
+        "total": 41,
+        "failed": [],
+        "new": [
           "Jazeera Airways (JAZEERA): Third Quarter 2026 Financial Statement"
         ]
       }
