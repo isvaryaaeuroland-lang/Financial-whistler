@@ -19,9 +19,10 @@
       "413_0_2025-10-27_11-12-21_En.pdf",
       "413_0_2026-02-23_13-42-14_En.pdf",
       "413_0_2026-04-29_10-16-41_En.pdf",
-      "413_0_2026-07-27_15-38-04_En.pdf"
+      "413_0_2026-07-27_15-38-04_En.pdf",
+      "413_0_2026-11-10_06-42-15_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-10",
     "seeded_sources": []
   },
   "4320": {
@@ -73,8 +74,7 @@
       "2502_0_2026-08-13_14-39-18_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "1150": {
     "seeded": true,
@@ -577,8 +577,7 @@
       "8347_0_2026-11-08_18-25-39_En.pdf"
     ],
     "last_new_on": "2026-11-09",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "2223": {
     "seeded": true,
@@ -603,8 +602,7 @@
       "3903_0_2026-08-04_09-29-24_En.pdf"
     ],
     "last_new_on": "2026-10-24",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "7203": {
     "seeded": true,
@@ -630,8 +628,7 @@
       "2784_0_2026-11-02_22-06-58_En.pdf"
     ],
     "last_new_on": "2026-11-03",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "QAMC": {
     "seeded": true,
@@ -1329,6 +1326,7 @@
       "16164",
       "16939",
       "17673",
+      "1840",
       "18617",
       "19675",
       "20776",
@@ -1383,7 +1381,7 @@
       "9791",
       "9792"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-10",
     "seeded_sources": []
   },
   "ALEC": {
@@ -1400,7 +1398,7 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-09",
+    "date": "2026-11-10",
     "runs": [
       {
         "time": "12:37",
@@ -1408,30 +1406,11 @@
         "total": 41,
         "failed": [],
         "new": [
-          "Sports club company (6018): Q3 2026 Financial Statements",
-          "Al-Ramz real eatate (4327): Q3 2026 Financial Statements"
+          "Advanced Petrochemical Company (2330): Q3 2026 Financial Statements",
+          "Jazeera Airways (JAZEERA): Third Quarter 2026 Financial Statement"
         ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 37,
-        "total": 41,
-        "failed": [
-          "Al-Arabia (4071)",
-          "Al-Ramz real eatate (4327)",
-          "Saudi Aramco Base Oil Co. (2223)",
-          "Elm Co. (7203)"
-        ],
-        "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
