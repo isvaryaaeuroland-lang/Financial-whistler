@@ -1419,8 +1419,15 @@
         "new": [
           "Jazeera Airways (JAZEERA): Third Quarter 2026 Financial Statement"
         ]
+      },
+      {
+        "time": "18:37",
+        "ok": 41,
+        "total": 41,
+        "failed": [],
+        "new": []
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
