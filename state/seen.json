@@ -211,9 +211,10 @@
       "642_0_2025-11-06_11-22-08_En.pdf",
       "642_0_2026-04-08_07-49-21_En.pdf",
       "642_0_2026-05-14_08-29-25_En.pdf",
-      "642_0_2026-08-17_20-52-27_En.pdf"
+      "642_0_2026-08-17_20-52-27_En.pdf",
+      "642_0_2026-11-10_23-06-20_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-11",
     "seeded_sources": []
   },
   "2284": {
@@ -599,9 +600,10 @@
       "3903_0_2025-11-05_11-24-06_En.pdf",
       "3903_0_2026-02-15_20-44-29_En.pdf",
       "3903_0_2026-05-12_08-51-31_En.pdf",
-      "3903_0_2026-08-04_09-29-24_En.pdf"
+      "3903_0_2026-08-04_09-29-24_En.pdf",
+      "3903_0_2026-11-11_09-25-27_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-11",
     "seeded_sources": []
   },
   "7203": {
@@ -1399,7 +1401,7 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-10",
+    "date": "2026-11-11",
     "runs": [
       {
         "time": "12:37",
@@ -1407,27 +1409,11 @@
         "total": 41,
         "failed": [],
         "new": [
-          "Advanced Petrochemical Company (2330): Q3 2026 Financial Statements",
-          "Jazeera Airways (JAZEERA): Third Quarter 2026 Financial Statement"
+          "Mepco IR (1202): Q3 2026 Financial Statements",
+          "Saudi Aramco Base Oil Co. (2223): Q3 2026 Financial Statements"
         ]
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": [
-          "Jazeera Airways (JAZEERA): Third Quarter 2026 Financial Statement"
-        ]
-      },
-      {
-        "time": "18:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
