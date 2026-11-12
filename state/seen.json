@@ -218,8 +218,7 @@
       "642_0_2026-11-10_23-06-20_En.pdf"
     ],
     "last_new_on": "2026-11-11",
-    "seeded_sources": [],
-    "consecutive_failures": 2
+    "seeded_sources": []
   },
   "2284": {
     "seeded": true,
@@ -288,7 +287,8 @@
       "6866_0_2026-11-02_11-49-11_En.pdf"
     ],
     "last_new_on": "2026-11-02",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "9600": {
     "seeded": true,
@@ -1457,8 +1457,17 @@
           "Flynas (4264): Q3 2026 Financial Statements",
           "Qomel (9600): Q3 2026 Financial Statements"
         ]
+      },
+      {
+        "time": "18:37",
+        "ok": 40,
+        "total": 41,
+        "failed": [
+          "Nice One IR (4193)"
+        ],
+        "new": []
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
