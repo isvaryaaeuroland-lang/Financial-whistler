@@ -470,7 +470,8 @@
       "4526_0_2026-10-28_19-23-36_En.pdf"
     ],
     "last_new_on": "2026-10-29",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "4164": {
     "seeded": true,
@@ -1422,8 +1423,17 @@
         "total": 41,
         "failed": [],
         "new": []
+      },
+      {
+        "time": "18:37",
+        "ok": 40,
+        "total": 41,
+        "failed": [
+          "Jamjoom Pharmacy (4015)"
+        ],
+        "new": []
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
