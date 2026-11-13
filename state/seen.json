@@ -287,8 +287,7 @@
       "6866_0_2026-11-02_11-49-11_En.pdf"
     ],
     "last_new_on": "2026-11-02",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "9600": {
     "seeded": true,
@@ -1408,66 +1407,16 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-12",
+    "date": "2026-11-13",
     "runs": [
       {
         "time": "12:37",
-        "ok": 13,
+        "ok": 41,
         "total": 41,
-        "failed": [
-          "Advanced Petrochemical Company (2330)",
-          "Alandulus (4320)",
-          "Al-Arabia (4071)",
-          "Alinma Bank (1150)",
-          "Alujain Corporation (2170)",
-          "DRC IR (9621)",
-          "Entaj IR (2287)",
-          "Flynas (4264)",
-          "Fourth Milling Company IR (2286)",
-          "Mepco IR (1202)",
-          "Modern Mills (2284)",
-          "National Care Medical (4005)",
-          "Nice One IR (4193)",
-          "Qomel (9600)",
-          "SACO (4008)",
-          "SHL Finance (1183)",
-          "SMC - IR (4019)",
-          "Spimaco (2070)",
-          "Takween (1201)",
-          "Tanmiah Food company (2281)",
-          "Jamjoom Pharmacy (4015)",
-          "Nahdi (4164)",
-          "Aljazira Bank (1020)",
-          "Sports club company (6018)",
-          "Arab national bank (1080)",
-          "Al-Ramz real eatate (4327)",
-          "Saudi Aramco Base Oil Co. (2223)",
-          "Elm Co. (7203)"
-        ],
-        "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 40,
-        "total": 41,
-        "failed": [
-          "Mepco IR (1202)"
-        ],
-        "new": [
-          "Flynas (4264): Q3 2026 Financial Statements",
-          "Qomel (9600): Q3 2026 Financial Statements"
-        ]
-      },
-      {
-        "time": "18:37",
-        "ok": 40,
-        "total": 41,
-        "failed": [
-          "Nice One IR (4193)"
-        ],
+        "failed": [],
         "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
