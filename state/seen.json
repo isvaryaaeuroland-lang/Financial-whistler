@@ -218,7 +218,8 @@
       "642_0_2026-11-10_23-06-20_En.pdf"
     ],
     "last_new_on": "2026-11-11",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "2284": {
     "seeded": true,
@@ -287,8 +288,7 @@
       "6866_0_2026-11-02_11-49-11_En.pdf"
     ],
     "last_new_on": "2026-11-02",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "9600": {
     "seeded": true,
@@ -497,7 +497,8 @@
       "2964_0_2026-10-29_16-13-12_En.pdf"
     ],
     "last_new_on": "2026-11-01",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "1020": {
     "seeded": true,
@@ -523,8 +524,7 @@
       "329_0_2026-10-29_12-25-51_En.pdf"
     ],
     "last_new_on": "2026-10-29",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "6018": {
     "seeded": true,
@@ -637,7 +637,8 @@
       "2784_0_2026-11-02_22-06-58_En.pdf"
     ],
     "last_new_on": "2026-11-03",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "QAMC": {
     "seeded": true,
@@ -790,7 +791,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 1
+    "consecutive_failures": 2
   },
   "BLUEDART": {
     "seeded": true,
@@ -923,7 +924,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 1
+    "consecutive_failures": 2
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1118,7 +1119,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 1
+    "consecutive_failures": 2
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1270,7 +1271,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 1
+    "consecutive_failures": 2
   },
   "INDGN": {
     "seeded": true,
@@ -1302,7 +1303,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 1
+    "consecutive_failures": 2
   },
   "NBOB": {
     "seeded": true,
@@ -1423,6 +1424,22 @@
         "failed": [
           "Nice One IR (4193)",
           "Aljazira Bank (1020)",
+          "Rategain (RATEGAIN)",
+          "BlueDart (BLUEDART)",
+          "Nucleus Software (NUCLEUS)",
+          "The Indian Hotels Company Limited (INDHOTEL)",
+          "Indegene (INDGN)"
+        ],
+        "new": []
+      },
+      {
+        "time": "15:37",
+        "ok": 33,
+        "total": 41,
+        "failed": [
+          "Mepco IR (1202)",
+          "Nahdi (4164)",
+          "Elm Co. (7203)",
           "Rategain (RATEGAIN)",
           "BlueDart (BLUEDART)",
           "Nucleus Software (NUCLEUS)",
