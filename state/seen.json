@@ -287,7 +287,8 @@
       "6866_0_2026-11-02_11-49-11_En.pdf"
     ],
     "last_new_on": "2026-11-02",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "9600": {
     "seeded": true,
@@ -470,8 +471,7 @@
       "4526_0_2026-10-28_19-23-36_En.pdf"
     ],
     "last_new_on": "2026-10-29",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "4164": {
     "seeded": true,
@@ -523,7 +523,8 @@
       "329_0_2026-10-29_12-25-51_En.pdf"
     ],
     "last_new_on": "2026-10-29",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "6018": {
     "seeded": true,
@@ -788,7 +789,8 @@
     "last_new_on": "2026-11-05",
     "seeded_sources": [
       "integrated"
-    ]
+    ],
+    "consecutive_failures": 1
   },
   "BLUEDART": {
     "seeded": true,
@@ -920,7 +922,8 @@
     "last_new_on": "2026-11-06",
     "seeded_sources": [
       "integrated"
-    ]
+    ],
+    "consecutive_failures": 1
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1114,7 +1117,8 @@
     "last_new_on": "2026-10-31",
     "seeded_sources": [
       "integrated"
-    ]
+    ],
+    "consecutive_failures": 1
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1265,7 +1269,8 @@
     "last_new_on": "2026-10-24",
     "seeded_sources": [
       "integrated"
-    ]
+    ],
+    "consecutive_failures": 1
   },
   "INDGN": {
     "seeded": true,
@@ -1296,7 +1301,8 @@
     "last_new_on": "2026-10-30",
     "seeded_sources": [
       "integrated"
-    ]
+    ],
+    "consecutive_failures": 1
   },
   "NBOB": {
     "seeded": true,
@@ -1408,32 +1414,24 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-13",
+    "date": "2026-11-14",
     "runs": [
       {
         "time": "12:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 41,
-        "total": 41,
-        "failed": [],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 40,
+        "ok": 34,
         "total": 41,
         "failed": [
-          "Jamjoom Pharmacy (4015)"
+          "Nice One IR (4193)",
+          "Aljazira Bank (1020)",
+          "Rategain (RATEGAIN)",
+          "BlueDart (BLUEDART)",
+          "Nucleus Software (NUCLEUS)",
+          "The Indian Hotels Company Limited (INDHOTEL)",
+          "Indegene (INDGN)"
         ],
         "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
