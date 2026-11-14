@@ -218,8 +218,7 @@
       "642_0_2026-11-10_23-06-20_En.pdf"
     ],
     "last_new_on": "2026-11-11",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "2284": {
     "seeded": true,
@@ -497,8 +496,7 @@
       "2964_0_2026-10-29_16-13-12_En.pdf"
     ],
     "last_new_on": "2026-11-01",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "1020": {
     "seeded": true,
@@ -637,8 +635,7 @@
       "2784_0_2026-11-02_22-06-58_En.pdf"
     ],
     "last_new_on": "2026-11-03",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "QAMC": {
     "seeded": true,
@@ -791,7 +788,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 2
+    "consecutive_failures": 3
   },
   "BLUEDART": {
     "seeded": true,
@@ -924,7 +921,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 2
+    "consecutive_failures": 3
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1119,7 +1116,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 2
+    "consecutive_failures": 3
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1271,7 +1268,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 2
+    "consecutive_failures": 3
   },
   "INDGN": {
     "seeded": true,
@@ -1303,7 +1300,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 2
+    "consecutive_failures": 3
   },
   "NBOB": {
     "seeded": true,
@@ -1447,8 +1444,21 @@
           "Indegene (INDGN)"
         ],
         "new": []
+      },
+      {
+        "time": "18:37",
+        "ok": 36,
+        "total": 41,
+        "failed": [
+          "Rategain (RATEGAIN)",
+          "BlueDart (BLUEDART)",
+          "Nucleus Software (NUCLEUS)",
+          "The Indian Hotels Company Limited (INDHOTEL)",
+          "Indegene (INDGN)"
+        ],
+        "new": []
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
