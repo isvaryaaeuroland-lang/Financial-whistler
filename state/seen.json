@@ -323,9 +323,10 @@
       "643_0_2025-11-06_15-01-34_En.pdf",
       "643_0_2026-03-10_11-26-00_En.pdf",
       "643_0_2026-05-14_16-13-22_En.pdf",
-      "643_0_2026-08-12_16-59-03_En.pdf"
+      "643_0_2026-08-12_16-59-03_En.pdf",
+      "643_0_2026-11-12_17-59-49_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-15",
     "seeded_sources": []
   },
   "1183": {
@@ -788,7 +789,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 3
+    "consecutive_failures": 4
   },
   "BLUEDART": {
     "seeded": true,
@@ -921,7 +922,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 3
+    "consecutive_failures": 4
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1116,7 +1117,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 3
+    "consecutive_failures": 4
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1268,7 +1269,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 3
+    "consecutive_failures": 4
   },
   "INDGN": {
     "seeded": true,
@@ -1300,7 +1301,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 3
+    "consecutive_failures": 4
   },
   "NBOB": {
     "seeded": true,
@@ -1322,9 +1323,10 @@
       "16046",
       "16156",
       "16321",
-      "16464"
+      "16464",
+      "16603"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-15",
     "seeded_sources": []
   },
   "JAZEERA": {
@@ -1412,41 +1414,10 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-14",
+    "date": "2026-11-15",
     "runs": [
       {
         "time": "12:37",
-        "ok": 34,
-        "total": 41,
-        "failed": [
-          "Nice One IR (4193)",
-          "Aljazira Bank (1020)",
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 33,
-        "total": 41,
-        "failed": [
-          "Mepco IR (1202)",
-          "Nahdi (4164)",
-          "Elm Co. (7203)",
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
-      },
-      {
-        "time": "18:37",
         "ok": 36,
         "total": 41,
         "failed": [
@@ -1456,9 +1427,12 @@
           "The Indian Hotels Company Limited (INDHOTEL)",
           "Indegene (INDGN)"
         ],
-        "new": []
+        "new": [
+          "SACO (4008): Q3 2026 Financial Statements",
+          "Oman Telecom - Omantel (OTEL): Unaudited financial statements for Quarter 3 ended on 2026-09-30"
+        ]
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
