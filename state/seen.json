@@ -789,7 +789,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 4
+    "consecutive_failures": 5
   },
   "BLUEDART": {
     "seeded": true,
@@ -922,7 +922,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 4
+    "consecutive_failures": 5
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1117,7 +1117,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 4
+    "consecutive_failures": 5
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1269,7 +1269,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 4
+    "consecutive_failures": 5
   },
   "INDGN": {
     "seeded": true,
@@ -1301,7 +1301,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 4
+    "consecutive_failures": 5
   },
   "NBOB": {
     "seeded": true,
@@ -1431,6 +1431,19 @@
           "SACO (4008): Q3 2026 Financial Statements",
           "Oman Telecom - Omantel (OTEL): Unaudited financial statements for Quarter 3 ended on 2026-09-30"
         ]
+      },
+      {
+        "time": "15:37",
+        "ok": 36,
+        "total": 41,
+        "failed": [
+          "Rategain (RATEGAIN)",
+          "BlueDart (BLUEDART)",
+          "Nucleus Software (NUCLEUS)",
+          "The Indian Hotels Company Limited (INDHOTEL)",
+          "Indegene (INDGN)"
+        ],
+        "new": []
       }
     ],
     "sent": false
