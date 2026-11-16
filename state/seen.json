@@ -172,8 +172,7 @@
       "7606_0_2026-11-11_16-19-45_En.pdf"
     ],
     "last_new_on": "2026-11-12",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "2286": {
     "seeded": true,
@@ -423,8 +422,7 @@
       "368_0_2026-11-08_13-59-30_En.pdf"
     ],
     "last_new_on": "2026-11-08",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "2281": {
     "seeded": true,
@@ -791,7 +789,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 6
+    "consecutive_failures": 7
   },
   "BLUEDART": {
     "seeded": true,
@@ -924,7 +922,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 6
+    "consecutive_failures": 7
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1119,7 +1117,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 6
+    "consecutive_failures": 7
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1271,7 +1269,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 6
+    "consecutive_failures": 7
   },
   "INDGN": {
     "seeded": true,
@@ -1303,7 +1301,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 6
+    "consecutive_failures": 7
   },
   "NBOB": {
     "seeded": true,
@@ -1416,7 +1414,7 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-15",
+    "date": "2026-11-16",
     "runs": [
       {
         "time": "12:37",
@@ -1429,40 +1427,9 @@
           "The Indian Hotels Company Limited (INDHOTEL)",
           "Indegene (INDGN)"
         ],
-        "new": [
-          "SACO (4008): Q3 2026 Financial Statements",
-          "Oman Telecom - Omantel (OTEL): Unaudited financial statements for Quarter 3 ended on 2026-09-30"
-        ]
-      },
-      {
-        "time": "15:37",
-        "ok": 36,
-        "total": 41,
-        "failed": [
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 34,
-        "total": 41,
-        "failed": [
-          "Flynas (4264)",
-          "Takween (1201)",
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
         "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
