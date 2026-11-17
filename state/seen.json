@@ -49,8 +49,7 @@
       "683_0_2026-11-04_08-01-27_En.pdf"
     ],
     "last_new_on": "2026-11-04",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "4071": {
     "seeded": true,
@@ -242,7 +241,8 @@
       "5570_0_2026-11-01_16-38-49_En.pdf"
     ],
     "last_new_on": "2026-11-02",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "4005": {
     "seeded": true,
@@ -445,9 +445,10 @@
       "2202_0_2025-11-13_15-04-48_En.pdf",
       "2202_0_2026-02-19_16-22-53_En.pdf",
       "2202_0_2026-05-14_10-47-28_En.pdf",
-      "2202_0_2026-08-13_12-47-36_En.pdf"
+      "2202_0_2026-08-13_12-47-36_En.pdf",
+      "2202_0_2026-11-12_10-23-19_En.pdf"
     ],
-    "last_new_on": "2026-10-24",
+    "last_new_on": "2026-11-17",
     "seeded_sources": []
   },
   "4015": {
@@ -790,7 +791,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 11
+    "consecutive_failures": 12
   },
   "BLUEDART": {
     "seeded": true,
@@ -923,7 +924,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 11
+    "consecutive_failures": 12
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1118,7 +1119,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 11
+    "consecutive_failures": 12
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1270,7 +1271,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 11
+    "consecutive_failures": 12
   },
   "INDGN": {
     "seeded": true,
@@ -1302,7 +1303,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 11
+    "consecutive_failures": 12
   },
   "NBOB": {
     "seeded": true,
@@ -1444,8 +1445,24 @@
           "Indegene (INDGN)"
         ],
         "new": []
+      },
+      {
+        "time": "18:37",
+        "ok": 35,
+        "total": 41,
+        "failed": [
+          "Modern Mills (2284)",
+          "Rategain (RATEGAIN)",
+          "BlueDart (BLUEDART)",
+          "Nucleus Software (NUCLEUS)",
+          "The Indian Hotels Company Limited (INDHOTEL)",
+          "Indegene (INDGN)"
+        ],
+        "new": [
+          "Tanmiah Food company (2281): Q3 2026 Financial Statements"
+        ]
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
