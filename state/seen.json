@@ -497,7 +497,8 @@
       "2964_0_2026-10-29_16-13-12_En.pdf"
     ],
     "last_new_on": "2026-11-01",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "1020": {
     "seeded": true,
@@ -789,7 +790,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 9
+    "consecutive_failures": 10
   },
   "BLUEDART": {
     "seeded": true,
@@ -922,7 +923,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 9
+    "consecutive_failures": 10
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1117,7 +1118,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 9
+    "consecutive_failures": 10
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1269,7 +1270,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 9
+    "consecutive_failures": 10
   },
   "INDGN": {
     "seeded": true,
@@ -1301,7 +1302,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 9
+    "consecutive_failures": 10
   },
   "NBOB": {
     "seeded": true,
@@ -1414,67 +1415,14 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-16",
+    "date": "2026-11-17",
     "runs": [
       {
         "time": "12:37",
-        "ok": 36,
+        "ok": 35,
         "total": 41,
         "failed": [
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 8,
-        "total": 41,
-        "failed": [
-          "Advanced Petrochemical Company (2330)",
-          "Alandulus (4320)",
-          "Al-Arabia (4071)",
-          "Alinma Bank (1150)",
-          "Alujain Corporation (2170)",
-          "DRC IR (9621)",
-          "Entaj IR (2287)",
-          "Flynas (4264)",
-          "Fourth Milling Company IR (2286)",
-          "Mepco IR (1202)",
-          "Modern Mills (2284)",
-          "National Care Medical (4005)",
-          "Nice One IR (4193)",
-          "Qomel (9600)",
-          "SACO (4008)",
-          "SHL Finance (1183)",
-          "SMC - IR (4019)",
-          "Spimaco (2070)",
-          "Takween (1201)",
-          "Tanmiah Food company (2281)",
-          "Jamjoom Pharmacy (4015)",
           "Nahdi (4164)",
-          "Aljazira Bank (1020)",
-          "Sports club company (6018)",
-          "Arab national bank (1080)",
-          "Al-Ramz real eatate (4327)",
-          "Saudi Aramco Base Oil Co. (2223)",
-          "Elm Co. (7203)",
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
-      },
-      {
-        "time": "18:38",
-        "ok": 36,
-        "total": 41,
-        "failed": [
           "Rategain (RATEGAIN)",
           "BlueDart (BLUEDART)",
           "Nucleus Software (NUCLEUS)",
@@ -1484,6 +1432,6 @@
         "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
