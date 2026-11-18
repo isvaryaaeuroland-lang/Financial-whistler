@@ -101,7 +101,8 @@
       "361_0_2026-10-28_15-34-39_En.pdf"
     ],
     "last_new_on": "2026-10-29",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "2170": {
     "seeded": true,
@@ -241,8 +242,7 @@
       "5570_0_2026-11-01_16-38-49_En.pdf"
     ],
     "last_new_on": "2026-11-02",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "4005": {
     "seeded": true,
@@ -499,7 +499,8 @@
       "2964_0_2026-10-29_16-13-12_En.pdf"
     ],
     "last_new_on": "2026-11-01",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "1020": {
     "seeded": true,
@@ -791,7 +792,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 12
+    "consecutive_failures": 13
   },
   "BLUEDART": {
     "seeded": true,
@@ -924,7 +925,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 12
+    "consecutive_failures": 13
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1119,7 +1120,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 12
+    "consecutive_failures": 13
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1271,7 +1272,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 12
+    "consecutive_failures": 13
   },
   "INDGN": {
     "seeded": true,
@@ -1303,7 +1304,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 12
+    "consecutive_failures": 13
   },
   "NBOB": {
     "seeded": true,
@@ -1416,13 +1417,14 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-17",
+    "date": "2026-11-18",
     "runs": [
       {
         "time": "12:37",
-        "ok": 35,
+        "ok": 34,
         "total": 41,
         "failed": [
+          "Alinma Bank (1150)",
           "Nahdi (4164)",
           "Rategain (RATEGAIN)",
           "BlueDart (BLUEDART)",
@@ -1431,38 +1433,8 @@
           "Indegene (INDGN)"
         ],
         "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 35,
-        "total": 41,
-        "failed": [
-          "Alandulus (4320)",
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 35,
-        "total": 41,
-        "failed": [
-          "Modern Mills (2284)",
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": [
-          "Tanmiah Food company (2281): Q3 2026 Financial Statements"
-        ]
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
