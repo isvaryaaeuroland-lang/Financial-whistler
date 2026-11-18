@@ -101,7 +101,8 @@
       "361_0_2026-10-28_15-34-39_En.pdf"
     ],
     "last_new_on": "2026-10-29",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "2170": {
     "seeded": true,
@@ -353,8 +354,7 @@
       "3043_0_2026-11-04_16-11-29_En.pdf"
     ],
     "last_new_on": "2026-11-05",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "4019": {
     "seeded": true,
@@ -791,7 +791,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 14
+    "consecutive_failures": 15
   },
   "BLUEDART": {
     "seeded": true,
@@ -924,7 +924,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 14
+    "consecutive_failures": 15
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1119,7 +1119,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 14
+    "consecutive_failures": 15
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1271,7 +1271,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 14
+    "consecutive_failures": 15
   },
   "INDGN": {
     "seeded": true,
@@ -1303,7 +1303,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 14
+    "consecutive_failures": 15
   },
   "NBOB": {
     "seeded": true,
@@ -1446,8 +1446,22 @@
           "Indegene (INDGN)"
         ],
         "new": []
+      },
+      {
+        "time": "18:38",
+        "ok": 35,
+        "total": 41,
+        "failed": [
+          "Alinma Bank (1150)",
+          "Rategain (RATEGAIN)",
+          "BlueDart (BLUEDART)",
+          "Nucleus Software (NUCLEUS)",
+          "The Indian Hotels Company Limited (INDHOTEL)",
+          "Indegene (INDGN)"
+        ],
+        "new": []
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
