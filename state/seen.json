@@ -327,8 +327,7 @@
       "643_0_2026-11-12_17-59-49_En.pdf"
     ],
     "last_new_on": "2026-11-15",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "1183": {
     "seeded": true,
@@ -397,8 +396,7 @@
       "387_0_2026-11-05_09-56-07_En.pdf"
     ],
     "last_new_on": "2026-11-05",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "1201": {
     "seeded": true,
@@ -792,7 +790,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 18
+    "consecutive_failures": 19
   },
   "BLUEDART": {
     "seeded": true,
@@ -925,7 +923,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 18
+    "consecutive_failures": 19
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1120,7 +1118,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 18
+    "consecutive_failures": 19
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1272,7 +1270,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 18
+    "consecutive_failures": 19
   },
   "INDGN": {
     "seeded": true,
@@ -1304,7 +1302,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 18
+    "consecutive_failures": 19
   },
   "NBOB": {
     "seeded": true,
@@ -1417,24 +1415,10 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-19",
+    "date": "2026-11-20",
     "runs": [
       {
-        "time": "12:38",
-        "ok": 35,
-        "total": 41,
-        "failed": [
-          "Spimaco (2070)",
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
-      },
-      {
-        "time": "15:37",
+        "time": "12:37",
         "ok": 36,
         "total": 41,
         "failed": [
@@ -1445,23 +1429,8 @@
           "Indegene (INDGN)"
         ],
         "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 34,
-        "total": 41,
-        "failed": [
-          "SACO (4008)",
-          "Spimaco (2070)",
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
