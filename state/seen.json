@@ -218,7 +218,8 @@
       "642_0_2026-11-10_23-06-20_En.pdf"
     ],
     "last_new_on": "2026-11-11",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "2284": {
     "seeded": true,
@@ -790,7 +791,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 32
+    "consecutive_failures": 33
   },
   "BLUEDART": {
     "seeded": true,
@@ -923,7 +924,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 32
+    "consecutive_failures": 33
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1118,7 +1119,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 32
+    "consecutive_failures": 33
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1270,7 +1271,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 32
+    "consecutive_failures": 33
   },
   "INDGN": {
     "seeded": true,
@@ -1302,7 +1303,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 32
+    "consecutive_failures": 33
   },
   "NBOB": {
     "seeded": true,
@@ -1315,8 +1316,7 @@
       "16514"
     ],
     "last_new_on": "2026-10-28",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "OTEL": {
     "seeded": true,
@@ -1329,8 +1329,7 @@
       "16603"
     ],
     "last_new_on": "2026-11-15",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "JAZEERA": {
     "seeded": true,
@@ -1446,8 +1445,22 @@
           "Indegene (INDGN)"
         ],
         "new": []
+      },
+      {
+        "time": "18:37",
+        "ok": 35,
+        "total": 41,
+        "failed": [
+          "Mepco IR (1202)",
+          "Rategain (RATEGAIN)",
+          "BlueDart (BLUEDART)",
+          "Nucleus Software (NUCLEUS)",
+          "The Indian Hotels Company Limited (INDHOTEL)",
+          "Indegene (INDGN)"
+        ],
+        "new": []
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
