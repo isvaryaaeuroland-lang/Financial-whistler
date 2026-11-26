@@ -790,7 +790,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 38
+    "consecutive_failures": 39
   },
   "BLUEDART": {
     "seeded": true,
@@ -923,7 +923,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 38
+    "consecutive_failures": 39
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1118,7 +1118,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 38
+    "consecutive_failures": 39
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1270,7 +1270,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 38
+    "consecutive_failures": 39
   },
   "INDGN": {
     "seeded": true,
@@ -1302,7 +1302,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 38
+    "consecutive_failures": 39
   },
   "NBOB": {
     "seeded": true,
@@ -1442,8 +1442,21 @@
           "Indegene (INDGN)"
         ],
         "new": []
+      },
+      {
+        "time": "18:37",
+        "ok": 36,
+        "total": 41,
+        "failed": [
+          "Rategain (RATEGAIN)",
+          "BlueDart (BLUEDART)",
+          "Nucleus Software (NUCLEUS)",
+          "The Indian Hotels Company Limited (INDHOTEL)",
+          "Indegene (INDGN)"
+        ],
+        "new": []
       }
     ],
-    "sent": false
+    "sent": true
   }
 }
