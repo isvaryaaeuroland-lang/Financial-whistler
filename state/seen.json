@@ -192,8 +192,7 @@
       "6426_0_2026-11-04_18-36-33_En.pdf"
     ],
     "last_new_on": "2026-11-05",
-    "seeded_sources": [],
-    "consecutive_failures": 1
+    "seeded_sources": []
   },
   "1202": {
     "seeded": true,
@@ -791,7 +790,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 42
+    "consecutive_failures": 43
   },
   "BLUEDART": {
     "seeded": true,
@@ -924,7 +923,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 42
+    "consecutive_failures": 43
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1119,7 +1118,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 42
+    "consecutive_failures": 43
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1271,7 +1270,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 42
+    "consecutive_failures": 43
   },
   "INDGN": {
     "seeded": true,
@@ -1303,7 +1302,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 42
+    "consecutive_failures": 43
   },
   "NBOB": {
     "seeded": true,
@@ -1416,7 +1415,7 @@
     "seeded_sources": []
   },
   "_daily_status": {
-    "date": "2026-11-27",
+    "date": "2026-11-28",
     "runs": [
       {
         "time": "12:37",
@@ -1430,35 +1429,8 @@
           "Indegene (INDGN)"
         ],
         "new": []
-      },
-      {
-        "time": "15:37",
-        "ok": 36,
-        "total": 41,
-        "failed": [
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
-      },
-      {
-        "time": "18:37",
-        "ok": 35,
-        "total": 41,
-        "failed": [
-          "Fourth Milling Company IR (2286)",
-          "Rategain (RATEGAIN)",
-          "BlueDart (BLUEDART)",
-          "Nucleus Software (NUCLEUS)",
-          "The Indian Hotels Company Limited (INDHOTEL)",
-          "Indegene (INDGN)"
-        ],
-        "new": []
       }
     ],
-    "sent": true
+    "sent": false
   }
 }
