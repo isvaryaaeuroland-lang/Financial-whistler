@@ -569,7 +569,8 @@
       "344_0_2026-10-26_16-31-34_En.pdf"
     ],
     "last_new_on": "2026-10-27",
-    "seeded_sources": []
+    "seeded_sources": [],
+    "consecutive_failures": 1
   },
   "4327": {
     "seeded": true,
@@ -790,7 +791,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 43
+    "consecutive_failures": 44
   },
   "BLUEDART": {
     "seeded": true,
@@ -923,7 +924,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 43
+    "consecutive_failures": 44
   },
   "NUCLEUS": {
     "seeded": true,
@@ -1118,7 +1119,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 43
+    "consecutive_failures": 44
   },
   "INDHOTEL": {
     "seeded": true,
@@ -1270,7 +1271,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 43
+    "consecutive_failures": 44
   },
   "INDGN": {
     "seeded": true,
@@ -1302,7 +1303,7 @@
     "seeded_sources": [
       "integrated"
     ],
-    "consecutive_failures": 43
+    "consecutive_failures": 44
   },
   "NBOB": {
     "seeded": true,
@@ -1422,6 +1423,20 @@
         "ok": 36,
         "total": 41,
         "failed": [
+          "Rategain (RATEGAIN)",
+          "BlueDart (BLUEDART)",
+          "Nucleus Software (NUCLEUS)",
+          "The Indian Hotels Company Limited (INDHOTEL)",
+          "Indegene (INDGN)"
+        ],
+        "new": []
+      },
+      {
+        "time": "15:37",
+        "ok": 35,
+        "total": 41,
+        "failed": [
+          "Arab national bank (1080)",
           "Rategain (RATEGAIN)",
           "BlueDart (BLUEDART)",
           "Nucleus Software (NUCLEUS)",
